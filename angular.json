@@ -21,7 +21,7 @@
             "aot": false,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
-            "scripts": []
+            "scripts": ["node_modules/pusher-js/dist/web/pusher.min.js"]
           },
           "configurations": {
             "production": {
@@ -81,7 +81,10 @@
             "karmaConfig": "karma.conf.js",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
-            "scripts": ["node_modules/laravel-echo/dist/echo.js"]
+            "scripts": [
+              "node_modules/laravel-echo/dist/echo.js",
+              "node_modules/pusher-js/dist/web/pusher.min.js"
+            ]
           }
         },
         "lint": {
