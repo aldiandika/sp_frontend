@@ -24,7 +24,10 @@ var latitude: any;
 var longitude: any;
 var geolocation;
 var data: any;
-var dataG;
+var map: OlMap;
+
+var realLat;
+var realLong;
 
 @Component({
   selector: "app-map",
@@ -32,24 +35,14 @@ var dataG;
   styleUrls: ["./map.component.css"]
 })
 export class MapComponent implements OnInit {
-  map: OlMap;
   source: OlXYZ;
   layer: OlTileLayer;
-
-  crd: any;
-
-  coordinates: any;
-  accuracyFeature: any;
 
   vectorSource: any;
   vectorLayer: any;
 
-  yes: any;
-
   dataMap: any;
 
-  // lat: number = -6.921867999999984;
-  // long: number = 107.607093;
   marker: any;
   lineCoordinates = [];
 
@@ -73,6 +66,9 @@ export class MapComponent implements OnInit {
       latitude = data.t_lat;
       longitude = data.t_lon;
 
+      // console.log(latitude);
+      // console.log(longitude);
+
       this.launchMap();
     });
   }
@@ -89,7 +85,7 @@ export class MapComponent implements OnInit {
 
     var view = new OlView({
       center: fromLonLat([longitude, latitude]),
-      zoom: 6
+      zoom: 5
     });
 
     var positionFeature = new Feature({
@@ -119,7 +115,7 @@ export class MapComponent implements OnInit {
       source: this.vectorSource
     });
 
-    this.map = new OlMap({
+    map = new OlMap({
       target: "map",
       layers: [this.layer, this.vectorLayer],
       view: view
@@ -186,7 +182,7 @@ export class MapComponent implements OnInit {
       source: this.vectorSource
     });
 
-    this.map = new OlMap({
+    map = new OlMap({
       target: "map",
       layers: [this.layer, this.vectorLayer],
       view: view
@@ -202,12 +198,42 @@ export class MapComponent implements OnInit {
     });
     echo.channel("location").listen("SendLocation", e => {
       this.dataMap = e.location;
-      console.log(this.dataMap);
-      // this.updateMap(this.dataMap);
+      realLat = e.location.lat;
+      realLong = e.location.long;
+      // console.log(realLong);
+      this.updateMap(realLat, realLong);
     });
   }
 
-  updateMap(data) {
+  updateMap(lat, lon) {
     console.log("Update Map");
+
+    var nextPos = new Feature({
+      geometry: new Point(fromLonLat([lon, lat]))
+    });
+
+    nextPos.setStyle(
+      new Style({
+        image: new CircleStyle({
+          radius: 6,
+          fill: new Fill({
+            color: "#FF0000"
+          }),
+          stroke: new Stroke({
+            color: "#fff",
+            width: 2
+          })
+        })
+      })
+    );
+
+    this.vectorSource = new VectorSource({
+      features: [nextPos]
+    });
+
+    this.vectorLayer = new VectorLayer({
+      source: this.vectorSource
+    });
+    map.addLayer(this.vectorLayer);
   }
 }
