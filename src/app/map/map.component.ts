@@ -52,9 +52,10 @@ export class MapComponent implements OnInit {
   // constructor() {}
 
   ngOnInit() {
-    // this.GeoLocMap(this.lat, this.long);
+    // this.GeoLocMap(latitude, longitude);
     this.stayUpdate();
     this.getDataNlaunch();
+    console.log("yes");
     // this.launchMap();
   }
 
@@ -76,7 +77,10 @@ export class MapComponent implements OnInit {
   //Function to launch map
   launchMap() {
     this.source = new OlXYZ({
-      url: "http://tile.osm.org/{z}/{x}/{y}.png"
+      // url: "http://tile.osm.org/{z}/{x}/{y}.png"
+      attributionsCollapsible: false,
+      url:
+        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
     });
 
     this.layer = new OlTileLayer({
@@ -85,7 +89,8 @@ export class MapComponent implements OnInit {
 
     var view = new OlView({
       center: fromLonLat([longitude, latitude]),
-      zoom: 5
+      zoom: 5,
+      maxzoom: 18
     });
 
     var positionFeature = new Feature({
@@ -125,7 +130,10 @@ export class MapComponent implements OnInit {
   //Function to get geo Location data
   GeoLocMap(lat, lng) {
     this.source = new OlXYZ({
-      url: "http://tile.osm.org/{z}/{x}/{y}.png"
+      // url: "http://tile.osm.org/{z}/{x}/{y}.png"
+      attributionsCollapsible: false,
+      url:
+        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
     });
 
     this.layer = new OlTileLayer({
@@ -207,6 +215,8 @@ export class MapComponent implements OnInit {
 
   updateMap(lat, lon) {
     console.log("Update Map");
+
+    map.removeLayer(this.vectorLayer);
 
     var nextPos = new Feature({
       geometry: new Point(fromLonLat([lon, lat]))

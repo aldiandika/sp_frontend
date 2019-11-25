@@ -20,7 +20,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
+            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css","src/styles.css"],
             "scripts": ["node_modules/pusher-js/dist/web/pusher.min.js"]
           },
           "configurations": {
@@ -80,7 +80,10 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/styles.css"
+            ],
             "scripts": [
               "node_modules/laravel-echo/dist/echo.js",
               "node_modules/pusher-js/dist/web/pusher.min.js"

@@ -9,13 +9,21 @@
     <!-- <script src="https://js.pusher.com/5.0/pusher.min.js"></script> -->
     <style>
       .map {
-        width: 100%;
+        /* width: 100%; */
         height: 400px;
       }
     </style>
   </head>
   <body>
-    <div id="map" class="map"></div>
+    <div class="row">
+      <div class="col-md-3">
+        Kolom kiri
+      </div>
+      <div id="map" class="map col-md-6"></div>
+      <div class="col-md-3">
+        Kolom kanan
+      </div>
+    </div>
 
     <br />
     <button (click)="stayUpdate()">Update Map</button>
