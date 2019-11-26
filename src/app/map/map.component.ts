@@ -20,8 +20,8 @@ const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
 
 declare var google: any;
-var latitude: any;
-var longitude: any;
+var latitude = -6.9380338;
+var longitude = 107.7558287;
 var geolocation;
 var data: any;
 var map: OlMap;
@@ -53,10 +53,10 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     // this.GeoLocMap(latitude, longitude);
-    this.stayUpdate();
-    this.getDataNlaunch();
+    // this.stayUpdate();
+    // this.getDataNlaunch();
     console.log("yes");
-    // this.launchMap();
+    this.launchMap();
   }
 
   //Function to get data from database and launch map
@@ -78,7 +78,7 @@ export class MapComponent implements OnInit {
   launchMap() {
     this.source = new OlXYZ({
       // url: "http://tile.osm.org/{z}/{x}/{y}.png"
-      attributionsCollapsible: false,
+      // attributionsCollapsible: false,
       url:
         "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
     });
@@ -89,8 +89,8 @@ export class MapComponent implements OnInit {
 
     var view = new OlView({
       center: fromLonLat([longitude, latitude]),
-      zoom: 5,
-      maxzoom: 18
+      zoom: 15,
+      maxzoom: 19
     });
 
     var positionFeature = new Feature({

@@ -1,31 +1,90 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0" />
-    <meta charset="utf-8" />
+<!-- Komponen Map menggunakan OpenLayer -->
 
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <!-- <script src="https://js.pusher.com/5.0/pusher.min.js"></script> -->
-    <style>
-      .map {
-        /* width: 100%; */
-        height: 400px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="row">
-      <div class="col-md-3">
-        Kolom kiri
-      </div>
-      <div id="map" class="map col-md-6"></div>
-      <div class="col-md-3">
-        Kolom kanan
-      </div>
-    </div>
+<!-- Toolbar -->
+<mat-toolbar>
+  <mat-toolbar-row>
+    <img
+      class="centerd-toolbar"
+      width="40"
+      alt="Angular Logo"
+      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+    />
+    <span style="margin: auto;">
+      Sistem Informasi Bencana
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-    <br />
-    <button (click)="stayUpdate()">Update Map</button>
-  </body>
-</html>
+<div id="map" class="map"></div>
+
+<!-- Button sebelah kanan -->
+<div class="float-right">
+  <mat-grid-list cols="1" rows="6" rowHeight="2:1">
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<!-- Button sebelah kiri -->
+<div class="float-left">
+  <mat-grid-list cols="1" rows="6" rowHeight="2:1">
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-raised-button color="accent" class="button-menu">
+        Default
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
