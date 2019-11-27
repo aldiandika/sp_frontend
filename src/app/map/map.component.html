@@ -4,12 +4,12 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <img
-      class="centerd-toolbar"
+      class="centerd-item"
       width="40"
       alt="Angular Logo"
       src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
     />
-    <span style="margin: auto;">
+    <span class="centered-item">
       Sistem Informasi Bencana
     </span>
   </mat-toolbar-row>
@@ -17,22 +17,48 @@
 
 <div id="map" class="map"></div>
 
-<!-- Button sebelah kanan -->
+<!-- Buttons sebelah kanan -->
 <div class="float-right">
   <mat-grid-list cols="1" rows="6" rowHeight="2:1">
     <mat-grid-tile>
       <button mat-raised-button color="accent" class="button-menu">
-        Default
+        HOME
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button color="accent" class="button-menu">
-        Default
+        MONITOR GPS
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button color="accent" class="button-menu">
-        Default
+        MODE 3
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<!-- Buttons sebelah kiri -->
+<div class="float-left">
+  <mat-grid-list cols="1" rows="4" rowHeight="2:1">
+    <mat-grid-tile>
+      <button
+        mat-raised-button
+        (click)="openCommDialog()"
+        color="accent"
+        class="button-menu"
+      >
+        PESAN
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button
+        mat-raised-button
+        (click)="openReportDialog()"
+        color="accent"
+        class="button-menu"
+      >
+        REPORT
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -53,38 +79,8 @@
   </mat-grid-list>
 </div>
 
-<!-- Button sebelah kiri -->
-<div class="float-left">
-  <mat-grid-list cols="1" rows="6" rowHeight="2:1">
-    <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
-      </button>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
-      </button>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+<footer class="footer-design">
+  <div style="margin: auto;">
+    Lat : 123.45 # Lon : -123.34
+  </div>
+</footer>

@@ -3,10 +3,14 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { MapComponent } from "./map/map.component";
+import { MapComponent, CommDialog, ReportDialog } from "./map/map.component";
 import { MapboComponent } from "./mapbo/mapbo.component";
 
 import { HttpClientModule } from "@angular/common/http";
+
+import { MatDialogModule } from "@angular/material/dialog";
+
+import { DialogContentExampleDialog } from "./pop-kom/pop-kom.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatCardModule } from "@angular/material/card";
@@ -14,9 +18,19 @@ import { MatSliderModule } from "@angular/material/slider";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { PopKomComponent } from "./pop-kom/pop-kom.component";
+import { MatTreeModule } from "@angular/material/tree";
 
 @NgModule({
-  declarations: [AppComponent, MapComponent, MapboComponent],
+  declarations: [
+    AppComponent,
+    MapComponent,
+    MapboComponent,
+    DialogContentExampleDialog,
+    PopKomComponent,
+    CommDialog,
+    ReportDialog
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -26,9 +40,12 @@ import { MatGridListModule } from "@angular/material/grid-list";
     MatCardModule,
     MatToolbarModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTreeModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent, MapComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogContentExampleDialog, CommDialog, ReportDialog]
 })
 export class AppModule {}

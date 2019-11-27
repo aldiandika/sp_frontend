@@ -16,6 +16,8 @@ import { fromLonLat } from "ol/proj";
 
 import { HttpClient } from "@angular/common/http";
 
+import { MatDialog, MatDialogConfig } from "@angular/material";
+
 const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
 
@@ -47,7 +49,7 @@ export class MapComponent implements OnInit {
   lineCoordinates = [];
 
   response: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   // constructor() {}
 
@@ -57,6 +59,22 @@ export class MapComponent implements OnInit {
     // this.getDataNlaunch();
     console.log("yes");
     this.launchMap();
+  }
+
+  openCommDialog() {
+    const dialogRef = this.dialog.open(CommDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openReportDialog() {
+    const dialogRef = this.dialog.open(ReportDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   //Function to get data from database and launch map
@@ -247,3 +265,15 @@ export class MapComponent implements OnInit {
     map.addLayer(this.vectorLayer);
   }
 }
+
+@Component({
+  selector: "comm-dialog",
+  templateUrl: "comm-dialog.html"
+})
+export class CommDialog {}
+
+@Component({
+  selector: "report-dialog",
+  templateUrl: "report-dialog.html"
+})
+export class ReportDialog {}
