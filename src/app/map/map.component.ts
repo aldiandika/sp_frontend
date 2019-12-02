@@ -14,6 +14,8 @@ import { OSM, Vector as VectorSource } from "ol/source";
 import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
 import { fromLonLat } from "ol/proj";
 
+import { LineString } from "ol/geom";
+
 import { HttpClient } from "@angular/common/http";
 
 import { MatDialog, MatDialogConfig } from "@angular/material";
@@ -27,6 +29,10 @@ var longitude = 107.7558287;
 var geolocation;
 var data: any;
 var map: OlMap;
+var view: OlView;
+
+var lastLat = -6.9380338;
+var lastLon = 107.7558287;
 
 var realLat;
 var realLong;
@@ -43,6 +49,9 @@ export class MapComponent implements OnInit {
   vectorSource: any;
   vectorLayer: any;
 
+  lineSource: any;
+  lineLayer: any;
+
   dataMap: any;
 
   marker: any;
@@ -55,12 +64,13 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     // this.GeoLocMap(latitude, longitude);
-    // this.stayUpdate();
-    // this.getDataNlaunch();
+    this.stayUpdate();
+    this.getDataNlaunch();
     console.log("yes");
-    this.launchMap();
+    // this.launchMap();
   }
 
+  // function to open Communication dialog
   openCommDialog() {
     const dialogRef = this.dialog.open(CommDialog);
 
@@ -69,6 +79,7 @@ export class MapComponent implements OnInit {
     });
   }
 
+  // function to open Report dialog
   openReportDialog() {
     const dialogRef = this.dialog.open(ReportDialog);
 
@@ -105,7 +116,7 @@ export class MapComponent implements OnInit {
       source: this.source
     });
 
-    var view = new OlView({
+    view = new OlView({
       center: fromLonLat([longitude, latitude]),
       zoom: 15,
       maxzoom: 19
@@ -130,6 +141,21 @@ export class MapComponent implements OnInit {
       })
     );
 
+    var route = new Feature();
+    var coordinates = [[longitude, latitude], [longitude, latitude]];
+    console.log(coordinates);
+    var geometry = new LineString(coordinates);
+    geometry.transform("EPSG:4326", "EPSG:3857"); //Transform to your map projection
+    route.setGeometry(geometry);
+
+    this.lineSource = new VectorSource({
+      features: [route]
+    });
+
+    this.lineLayer = new VectorLayer({
+      source: this.lineSource
+    });
+
     this.vectorSource = new VectorSource({
       features: [positionFeature]
     });
@@ -140,7 +166,7 @@ export class MapComponent implements OnInit {
 
     map = new OlMap({
       target: "map",
-      layers: [this.layer, this.vectorLayer],
+      layers: [this.layer, this.vectorLayer, this.lineLayer],
       view: view
     });
   }
@@ -235,6 +261,7 @@ export class MapComponent implements OnInit {
     console.log("Update Map");
 
     map.removeLayer(this.vectorLayer);
+    // map.removeLayer(this.lineLayer);
 
     var nextPos = new Feature({
       geometry: new Point(fromLonLat([lon, lat]))
@@ -255,6 +282,13 @@ export class MapComponent implements OnInit {
       })
     );
 
+    var nextRoute = new Feature();
+    var nextCoordinates = [[lastLon, lastLat], [lon, lat]];
+    console.log(nextCoordinates);
+    var nextGeom = new LineString(nextCoordinates);
+    nextGeom.transform("EPSG:4326", "EPSG:3857"); //Transform to your map projection
+    nextRoute.setGeometry(nextGeom);
+
     this.vectorSource = new VectorSource({
       features: [nextPos]
     });
@@ -262,7 +296,22 @@ export class MapComponent implements OnInit {
     this.vectorLayer = new VectorLayer({
       source: this.vectorSource
     });
+
+    this.lineSource = new VectorSource({
+      features: [nextRoute]
+    });
+
+    this.lineLayer = new VectorLayer({
+      source: this.lineSource
+    });
+
+    // Jika ingin menambah fitur dari surce yang sudah ada
+    // this.lineLayer.getSource().addFeature(nextRoute);
+    map.addLayer(this.lineLayer);
     map.addLayer(this.vectorLayer);
+
+    lastLat = lat;
+    lastLon = lon;
   }
 }
 
