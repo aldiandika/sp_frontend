@@ -16,6 +16,7 @@ import { fromLonLat } from "ol/proj";
 import { LineString } from "ol/geom";
 
 import { Icon } from "ol/style";
+import { Polygon } from "ol/geom";
 
 import { HttpClient } from "@angular/common/http";
 
@@ -56,8 +57,8 @@ export class MapComponent implements OnInit {
   bpSource: any;
   bpLayer: any;
 
-  victimSource: any;
-  victimLayer: any;
+  polySource: any;
+  polyLayer: any;
 
   dataMap: any;
 
@@ -184,6 +185,34 @@ export class MapComponent implements OnInit {
     });
     //End of Source dan layer untuk CC
 
+    var poly = new Feature({
+      geometry: new Polygon([
+        [
+          [107.758198, -6.93887],
+          [107.758198, -6.93687],
+          [107.756198, -6.93587],
+          [107.757198, -6.93877],
+          [107.758198, -6.93887],
+          [107.756198, -6.93887]
+        ]
+      ]),
+      name: "hello",
+      population: 200,
+      rainfall: 40
+    });
+
+    poly.getGeometry().transform("EPSG:4326", "EPSG:3857");
+
+    //Source dan layer untuk polygon
+    this.polySource = new VectorSource({
+      features: [poly]
+    });
+
+    this.polyLayer = new VectorLayer({
+      source: this.polySource
+    });
+    //End of Source dan layer untuk polygon
+
     //Fitur untuk marker
 
     //Marker BP dummy
@@ -246,7 +275,13 @@ export class MapComponent implements OnInit {
 
     map = new OlMap({
       target: "map",
-      layers: [this.layer, this.vectorLayer, this.lineLayer, this.bpLayer],
+      layers: [
+        this.layer,
+        this.polyLayer,
+        this.vectorLayer,
+        this.lineLayer,
+        this.bpLayer
+      ],
       view: view
     });
   }
@@ -405,6 +440,16 @@ export class MapComponent implements OnInit {
 
     lastLat = lat;
     lastLon = lon;
+  }
+
+  showVictimdata() {
+    this.vectorLayer.setOpacity(0);
+    console.log("show victim data");
+  }
+
+  showAllFeature() {
+    this.vectorLayer.setOpacity(1);
+    console.log("show All data");
   }
 }
 
