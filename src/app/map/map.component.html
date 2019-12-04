@@ -32,7 +32,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button color="accent" class="button-menu">
-        MODE 3
+        DATA KORBAN
       </button>
     </mat-grid-tile>
   </mat-grid-list>
@@ -62,18 +62,33 @@
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
+      <button
+        mat-raised-button
+        (click)="openReportDialog()"
+        color="accent"
+        class="button-menu"
+      >
+        SENSOR
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
+      <button
+        mat-raised-button
+        (click)="openReportDialog()"
+        color="accent"
+        class="button-menu"
+      >
+        TOOLS
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button color="accent" class="button-menu">
-        Default
+      <button
+        mat-raised-button
+        (click)="openReportDialog()"
+        color="accent"
+        class="button-menu"
+      >
+        COMMAND
       </button>
     </mat-grid-tile>
   </mat-grid-list>
