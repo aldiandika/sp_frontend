@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import Echo from "laravel-echo";
+import * as Pusher from "pusher-js";
 
 import OlMap from "ol/Map";
 import OlXYZ from "ol/source/XYZ";
@@ -20,7 +21,7 @@ import { Polygon } from "ol/geom";
 
 import { HttpClient } from "@angular/common/http";
 
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material";
 
 const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
@@ -56,6 +57,9 @@ export class MapComponent implements OnInit {
 
   bpSource: any;
   bpLayer: any;
+
+  victimSource: any;
+  victimLayer: any;
 
   polySource: any;
   polyLayer: any;
@@ -139,7 +143,7 @@ export class MapComponent implements OnInit {
       new Style({
         image: new Icon({
           src: "/assets/marker-asset/CC-Marker.png",
-          scale: 0.2,
+          scale: 0.15,
           anchor: [0.5, 1],
           anchorXUnits: "fraction",
           anchorYUnits: "fraction"
@@ -185,15 +189,14 @@ export class MapComponent implements OnInit {
     });
     //End of Source dan layer untuk CC
 
+    //Fitur untuk polygon
     var poly = new Feature({
       geometry: new Polygon([
         [
-          [107.758198, -6.93887],
-          [107.758198, -6.93687],
-          [107.756198, -6.93587],
-          [107.757198, -6.93877],
-          [107.758198, -6.93887],
-          [107.756198, -6.93887]
+          [107.757198, -6.93987], //kanan-atas
+          [107.755198, -6.93987], //kiri-atas
+          [107.755198, -6.93787], //kiri-bawah
+          [107.757198, -6.93787], //kanan-bawah
         ]
       ]),
       name: "hello",
@@ -203,15 +206,85 @@ export class MapComponent implements OnInit {
 
     poly.getGeometry().transform("EPSG:4326", "EPSG:3857");
 
-    //Source dan layer untuk polygon
+    var poly2 = new Feature({
+      geometry: new Polygon([
+        [
+          [107.759198, -6.93987], //kanan-atas
+          [107.757198, -6.93987], //kiri-atas
+          [107.757198, -6.93787], //kiri-bawah
+          [107.759198, -6.93787], //kanan-bawah
+        ],
+      ]),
+      fill: new Fill({
+        color: 'rgba(255, 0, 0, 1)'
+      })
+
+    });
+
+    poly2.getGeometry().transform("EPSG:4326", "EPSG:3857");     
+    
+    var poly3 = new Feature({
+      geometry: new Polygon([
+        [
+          [107.759198, -6.93787], //kanan-atas
+          [107.757198, -6.93787], //kiri-atas
+          [107.757198, -6.93587], //kiri-bawah
+          [107.759198, -6.93587], //kanan-bawah
+        ]
+      ])
+    });
+
+    poly3.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+    
+    var poly4 = new Feature({
+      geometry: new Polygon([
+        [
+          [107.757198, -6.93587], //kanan-atas
+          [107.755198, -6.93587], //kiri-atas
+          [107.755198, -6.93387], //kiri-bawah
+          [107.757198, -6.93387], //kanan-bawah
+        ]
+      ])
+    });
+
+    poly4.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+
+    var poly5 = new Feature({
+      geometry: new Polygon([
+        [
+          [107.759198, -6.93587], //kanan-atas
+          [107.757198, -6.93587], //kiri-atas
+          [107.757198, -6.93387], //kiri-bawah
+          [107.759198, -6.93387], //kanan-bawah
+        ]
+      ])
+    });
+
+    poly5.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+
+    
+    //End of Fitur untuk polygon
+
+    //Source dan layer untuk layer victim
+    this.victimSource = new VectorSource({
+    });
+
+    this.victimLayer = new VectorLayer({
+      source: this.victimSource
+    });
+    //End of Source dan layer untuk layer victim
+
+    //Source dan layer untuk layer victim
     this.polySource = new VectorSource({
-      features: [poly]
+      features:[poly, poly2, poly3, poly4, poly5]
     });
 
     this.polyLayer = new VectorLayer({
       source: this.polySource
     });
-    //End of Source dan layer untuk polygon
+
+    this.polyLayer.setOpacity(0);
+    //End of Source dan layer untuk layer victim
 
     //Fitur untuk marker
 
@@ -231,7 +304,7 @@ export class MapComponent implements OnInit {
         new Style({
           image: new Icon({
             src: "/assets/marker-asset/BackPack-Marker.png",
-            scale: 0.2,
+            scale: 0.15,
             anchor: [0.5, 1],
             anchorXUnits: "fraction",
             anchorYUnits: "fraction"
@@ -240,6 +313,7 @@ export class MapComponent implements OnInit {
       );
       this.vectorSource.addFeature(bpMarker);
     }
+    //End of Marker BP dummy
 
     //Di kondisi nyata victim position diambil dari database
     var victimPos = [
@@ -247,7 +321,7 @@ export class MapComponent implements OnInit {
       [107.758198, -6.93687],
       [107.756198, -6.93887],
       [107.756198, -6.93587],
-      [107.757198, -6.93877],
+      [107.756798, -6.93877],
       [107.758198, -6.93887]
     ];
 
@@ -260,7 +334,7 @@ export class MapComponent implements OnInit {
         new Style({
           image: new Icon({
             src: "/assets/marker-asset/Victim-Marker.png",
-            scale: 0.2,
+            scale: 0.15,
             anchor: [0.5, 1],
             anchorXUnits: "fraction",
             anchorYUnits: "fraction"
@@ -268,17 +342,19 @@ export class MapComponent implements OnInit {
         })
       );
 
-      this.vectorSource.addFeature(victimMarker);
+      this.victimSource.addFeature(victimMarker);
     }
 
+    
     //End of Fitur untuk marker
 
     map = new OlMap({
       target: "map",
       layers: [
         this.layer,
-        this.polyLayer,
+        this.victimLayer,
         this.vectorLayer,
+        this.polyLayer,
         this.lineLayer,
         this.bpLayer
       ],
@@ -368,6 +444,7 @@ export class MapComponent implements OnInit {
       realLat = e.location.lat;
       realLong = e.location.long;
       // console.log(realLong);
+      console.log("stay Update");
       this.updateMap(realLat, realLong);
     });
   }
@@ -387,7 +464,7 @@ export class MapComponent implements OnInit {
       new Style({
         image: new Icon({
           src: "/assets/marker-asset/BackPack-Marker.png",
-          scale: 0.2,
+          scale: 0.15,
           anchor: [0.5, 1],
           anchorXUnits: "fraction",
           anchorYUnits: "fraction"
@@ -435,7 +512,7 @@ export class MapComponent implements OnInit {
 
     // Jika ingin menambah fitur dari source yang sudah ada
     // this.lineLayer.getSource().addFeature(nextRoute);
-    map.addLayer(this.lineLayer);
+    // map.addLayer(this.lineLayer);
     map.addLayer(this.bpLayer);
 
     lastLat = lat;
@@ -444,11 +521,15 @@ export class MapComponent implements OnInit {
 
   showVictimdata() {
     this.vectorLayer.setOpacity(0);
+    this.polyLayer.setOpacity(1);
     console.log("show victim data");
+
+    
   }
 
   showAllFeature() {
     this.vectorLayer.setOpacity(1);
+    this.polyLayer.setOpacity(0);
     console.log("show All data");
   }
 }
