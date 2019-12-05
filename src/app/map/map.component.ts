@@ -70,7 +70,7 @@ export class MapComponent implements OnInit {
   lineCoordinates = [];
 
   response: any;
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(private http: HttpClient, public dialog: MatDialog) { }
 
   // constructor() {}
 
@@ -189,6 +189,39 @@ export class MapComponent implements OnInit {
     });
     //End of Source dan layer untuk CC
 
+    //Source dan layer untuk layer victim
+    this.victimSource = new VectorSource({
+    });
+
+    this.victimLayer = new VectorLayer({
+      source: this.victimSource
+    });
+    //End of Source dan layer untuk layer victim
+
+    //Source dan layer untuk layer polygon
+    var polyStyle = new Style({
+      fill: new Fill({
+        color: 'rgba(255, 0, 0, 0.3)'
+      }),
+      stroke: new Stroke({
+        color: '#319FD3',
+        width: 1
+      }),
+    });
+
+    this.polySource = new VectorSource({
+      // features:[poly2, poly3, poly4, poly5]
+    });
+
+    this.polyLayer = new VectorLayer({
+      source: this.polySource,
+      style: polyStyle
+    });
+
+    this.polyLayer.setOpacity(0);
+    //End of Source dan layer untuk layer polygon
+
+
     //Fitur untuk polygon
     var poly = new Feature({
       geometry: new Polygon([
@@ -199,12 +232,10 @@ export class MapComponent implements OnInit {
           [107.757198, -6.93787], //kanan-bawah
         ]
       ]),
-      name: "hello",
-      population: 200,
-      rainfall: 40
     });
 
     poly.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    this.polySource.addFeature(poly);
 
     var poly2 = new Feature({
       geometry: new Polygon([
@@ -214,15 +245,13 @@ export class MapComponent implements OnInit {
           [107.757198, -6.93787], //kiri-bawah
           [107.759198, -6.93787], //kanan-bawah
         ],
-      ]),
-      fill: new Fill({
-        color: 'rgba(255, 0, 0, 1)'
-      })
+      ])
 
     });
 
-    poly2.getGeometry().transform("EPSG:4326", "EPSG:3857");     
-    
+    poly2.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    this.polySource.addFeature(poly2);
+
     var poly3 = new Feature({
       geometry: new Polygon([
         [
@@ -234,8 +263,9 @@ export class MapComponent implements OnInit {
       ])
     });
 
-    poly3.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
-    
+    poly3.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    this.polySource.addFeature(poly3);
+
     var poly4 = new Feature({
       geometry: new Polygon([
         [
@@ -247,7 +277,8 @@ export class MapComponent implements OnInit {
       ])
     });
 
-    poly4.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+    poly4.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    this.polySource.addFeature(poly4);
 
     var poly5 = new Feature({
       geometry: new Polygon([
@@ -260,31 +291,11 @@ export class MapComponent implements OnInit {
       ])
     });
 
-    poly5.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+    poly5.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    this.polySource.addFeature(poly5);
 
-    
+
     //End of Fitur untuk polygon
-
-    //Source dan layer untuk layer victim
-    this.victimSource = new VectorSource({
-    });
-
-    this.victimLayer = new VectorLayer({
-      source: this.victimSource
-    });
-    //End of Source dan layer untuk layer victim
-
-    //Source dan layer untuk layer victim
-    this.polySource = new VectorSource({
-      features:[poly, poly2, poly3, poly4, poly5]
-    });
-
-    this.polyLayer = new VectorLayer({
-      source: this.polySource
-    });
-
-    this.polyLayer.setOpacity(0);
-    //End of Source dan layer untuk layer victim
 
     //Fitur untuk marker
 
@@ -345,7 +356,7 @@ export class MapComponent implements OnInit {
       this.victimSource.addFeature(victimMarker);
     }
 
-    
+
     //End of Fitur untuk marker
 
     map = new OlMap({
@@ -413,7 +424,7 @@ export class MapComponent implements OnInit {
       features: [positionFeature]
     });
 
-    geolocation.on("change:position", function(evt) {
+    geolocation.on("change:position", function (evt) {
       console.log(geolocation.getPosition());
       var pos = geolocation.getPosition();
       positionFeature.setGeometry(new Point(pos));
@@ -524,7 +535,7 @@ export class MapComponent implements OnInit {
     this.polyLayer.setOpacity(1);
     console.log("show victim data");
 
-    
+
   }
 
   showAllFeature() {
@@ -538,10 +549,10 @@ export class MapComponent implements OnInit {
   selector: "comm-dialog",
   templateUrl: "comm-dialog.html"
 })
-export class CommDialog {}
+export class CommDialog { }
 
 @Component({
   selector: "report-dialog",
   templateUrl: "report-dialog.html"
 })
-export class ReportDialog {}
+export class ReportDialog { }
