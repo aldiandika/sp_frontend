@@ -3,12 +3,8 @@
 <!-- Toolbar -->
 <mat-toolbar>
   <mat-toolbar-row>
-    <img
-      class="centerd-item"
-      width="40"
-      alt="Angular Logo"
-      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-    />
+    <img class="centerd-item" width="40" alt="Angular Logo"
+      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
     <span class="centered-item">
       Sistem Informasi Bencana
     </span>
@@ -17,31 +13,26 @@
 
 <div id="map" class="map"></div>
 
+<div id="popup" class="ol-popup">
+  <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+  <div id="popup-content"></div>
+</div>
+
 <!-- Buttons sebelah kanan -->
 <div class="float-right">
   <mat-grid-list cols="1" rows="6" rowHeight="2:1">
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        color="accent"
-        class="button-menu"
-        (click)="showAllFeature()"
-      >
+      <button mat-raised-button color="accent" class="button-menu" (click)="showAllFeature()">
         HOME
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button color="accent" class="button-menu">
-        MONITOR GPS
+        SWEEPER MODE
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        color="accent"
-        class="button-menu"
-        (click)="showVictimdata()"
-      >
+      <button mat-raised-button color="accent" class="button-menu" (click)="showVictimdata()">
         DATA KORBAN
       </button>
     </mat-grid-tile>
@@ -52,52 +43,27 @@
 <div class="float-left">
   <mat-grid-list cols="1" rows="4" rowHeight="2:1">
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        (click)="openCommDialog()"
-        color="accent"
-        class="button-menu"
-      >
+      <button mat-raised-button (click)="openCommDialog()" color="accent" class="button-menu">
         PESAN
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        (click)="openReportDialog()"
-        color="accent"
-        class="button-menu"
-      >
+      <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
         REPORT
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        (click)="openReportDialog()"
-        color="accent"
-        class="button-menu"
-      >
+      <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
         SENSOR
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        (click)="openReportDialog()"
-        color="accent"
-        class="button-menu"
-      >
+      <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
         TOOLS
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button
-        mat-raised-button
-        (click)="openReportDialog()"
-        color="accent"
-        class="button-menu"
-      >
+      <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
         COMMAND
       </button>
     </mat-grid-tile>

@@ -13,15 +13,19 @@ import Point from "ol/geom/Point";
 import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { OSM, Vector as VectorSource } from "ol/source";
 import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
-import { fromLonLat } from "ol/proj";
+import { fromLonLat, toLonLat } from "ol/proj";
 import { LineString } from "ol/geom";
 
 import { Icon } from "ol/style";
 import { Polygon } from "ol/geom";
 
+import Overlay from "ol/Overlay";
+import { toStringHDMS } from 'ol/coordinate';
+
 import { HttpClient } from "@angular/common/http";
 
 import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material";
+import { Container } from '@angular/compiler/src/i18n/i18n_ast';
 
 const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
@@ -204,7 +208,7 @@ export class MapComponent implements OnInit {
         color: 'rgba(255, 0, 0, 0.3)'
       }),
       stroke: new Stroke({
-        color: '#319FD3',
+        color: '#FF00FF',
         width: 1
       }),
     });
@@ -293,8 +297,6 @@ export class MapComponent implements OnInit {
 
     poly5.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly5);
-
-
     //End of Fitur untuk polygon
 
     //Fitur untuk marker
@@ -356,8 +358,26 @@ export class MapComponent implements OnInit {
       this.victimSource.addFeature(victimMarker);
     }
 
-
+    var popCloser = document.getElementById('popup-closer');
     //End of Fitur untuk marker
+
+    var popContainer = document.getElementById('popup');
+    var popContent = document.getElementById('popup-content');
+    // var popCloser = document.getElementById('popup-closer');
+
+    var overlay = new Overlay({
+      element: popContainer,
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 250
+      }
+    });
+
+    popCloser.onclick = function () {
+      overlay.setPosition(undefined);
+      popCloser.blur();
+      return false;
+    }
 
     map = new OlMap({
       target: "map",
@@ -369,8 +389,22 @@ export class MapComponent implements OnInit {
         this.lineLayer,
         this.bpLayer
       ],
+      overlays: [overlay],
       view: view
     });
+
+    //Pop UP
+
+
+    map.on('singleclick', function (evt) {
+      var coordinate = evt.coordinate;
+      var hdms = toStringHDMS(toLonLat(coordinate));
+
+      popContent.innerHTML = '<p>Yes you Click</p><code>' + hdms + '</code>';
+
+      overlay.setPosition(coordinate);
+    });
+    //END of Pop UP
   }
 
   //Function to get geo Location data
@@ -441,6 +475,7 @@ export class MapComponent implements OnInit {
       layers: [this.layer, this.vectorLayer],
       view: view
     });
+
   }
 
   //function to get data real time
