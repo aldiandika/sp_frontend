@@ -25,7 +25,7 @@ import { toStringHDMS } from 'ol/coordinate';
 import { HttpClient } from "@angular/common/http";
 
 import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material";
-import { Container } from '@angular/compiler/src/i18n/i18n_ast';
+
 
 const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
@@ -43,6 +43,12 @@ var lastLon = 107.7558287;
 
 var realLat;
 var realLong;
+
+//State untuk menu 
+// 0 = home
+// 1 = data korban
+// 2 = sweeper mode
+var state = 0;
 
 @Component({
   selector: "app-map",
@@ -79,6 +85,7 @@ export class MapComponent implements OnInit {
   // constructor() {}
 
   ngOnInit() {
+    document.getElementById('popup').style.visibility = "hidden";
     // this.GeoLocMap(latitude, longitude);
     this.stayUpdate();
     this.getDataNlaunch();
@@ -237,6 +244,7 @@ export class MapComponent implements OnInit {
         ]
       ]),
     });
+    poly.setId('area1');
 
     poly.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly);
@@ -250,8 +258,8 @@ export class MapComponent implements OnInit {
           [107.759198, -6.93787], //kanan-bawah
         ],
       ])
-
     });
+    poly2.setId('area2');
 
     poly2.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly2);
@@ -266,6 +274,7 @@ export class MapComponent implements OnInit {
         ]
       ])
     });
+    poly3.setId('area3');
 
     poly3.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly3);
@@ -280,6 +289,7 @@ export class MapComponent implements OnInit {
         ]
       ])
     });
+    poly4.setId('area4');
 
     poly4.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly4);
@@ -294,6 +304,7 @@ export class MapComponent implements OnInit {
         ]
       ])
     });
+    poly5.setId('area5');
 
     poly5.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly5);
@@ -303,9 +314,9 @@ export class MapComponent implements OnInit {
 
     //Marker BP dummy
     var bpPos = [
-      [107.7548287, -6.9385338],
-      [107.7547187, -6.9381338],
-      [107.7546087, -6.9384338]
+      [107.7578287, -6.9385338],
+      [107.7576187, -6.9381338],
+      [107.7576087, -6.9384338]
     ];
 
     for (var i = 0; i < bpPos.length; i++) {
@@ -357,14 +368,16 @@ export class MapComponent implements OnInit {
 
       this.victimSource.addFeature(victimMarker);
     }
-
-    var popCloser = document.getElementById('popup-closer');
     //End of Fitur untuk marker
 
+    //Setting Pop Up untuk Map
     var popContainer = document.getElementById('popup');
     var popContent = document.getElementById('popup-content');
-    // var popCloser = document.getElementById('popup-closer');
+    var popCloser = document.getElementById('popup-closer');
 
+    popContainer.style.visibility = "visible";
+
+    //Settig overlay
     var overlay = new Overlay({
       element: popContainer,
       autoPan: true,
@@ -373,11 +386,13 @@ export class MapComponent implements OnInit {
       }
     });
 
+    //Fungsi untuk close pop up
     popCloser.onclick = function () {
       overlay.setPosition(undefined);
       popCloser.blur();
       return false;
     }
+    //END of Setting Pop Up untuk Map
 
     map = new OlMap({
       target: "map",
@@ -393,18 +408,30 @@ export class MapComponent implements OnInit {
       view: view
     });
 
-    //Pop UP
-
-
+    //Fungsi untuk menampilkan popup
     map.on('singleclick', function (evt) {
       var coordinate = evt.coordinate;
       var hdms = toStringHDMS(toLonLat(coordinate));
 
-      popContent.innerHTML = '<p>Yes you Click</p><code>' + hdms + '</code>';
 
-      overlay.setPosition(coordinate);
+      if (state == 1) {
+        var polyFeature = map.getFeaturesAtPixel(evt.pixel);
+        if (polyFeature !== null) {
+          try {
+            var fId = polyFeature[0].getId();
+            popContent.innerHTML = '<code>' + fId + '</code>';
+            overlay.setPosition(coordinate);
+          } catch (e) {
+          }
+        }
+      } else if (state == 0) {
+        popContent.innerHTML = '<p>Lokasi : </p><code>' + hdms + '</code>';
+
+        overlay.setPosition(coordinate);
+      }
+
+
     });
-    //END of Pop UP
   }
 
   //Function to get geo Location data
@@ -568,14 +595,14 @@ export class MapComponent implements OnInit {
   showVictimdata() {
     this.vectorLayer.setOpacity(0);
     this.polyLayer.setOpacity(1);
+    state = 1;
     console.log("show victim data");
-
-
   }
 
   showAllFeature() {
     this.vectorLayer.setOpacity(1);
     this.polyLayer.setOpacity(0);
+    state = 0;
     console.log("show All data");
   }
 }
