@@ -1,49 +1,50 @@
-import { Component, OnInit } from "@angular/core";
-import Echo from "laravel-echo";
-import * as Pusher from "pusher-js";
+import { Component, OnInit } from '@angular/core';
+import Echo from 'laravel-echo';
+import * as Pusher from 'pusher-js';
 
-import OlMap from "ol/Map";
-import OlXYZ from "ol/source/XYZ";
-import OlTileLayer from "ol/layer/Tile";
-import OlView from "ol/View";
-import "ol/ol.css";
-import Feature from "ol/Feature";
-import Geolocation from "ol/Geolocation";
-import Point from "ol/geom/Point";
-import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
-import { OSM, Vector as VectorSource } from "ol/source";
-import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
-import { fromLonLat } from "ol/proj";
-import { LineString } from "ol/geom";
+import OlMap from 'ol/Map';
+import OlXYZ from 'ol/source/XYZ';
+import OlTileLayer from 'ol/layer/Tile';
+import OlView from 'ol/View';
+import 'ol/ol.css';
+import Feature from 'ol/Feature';
+import Geolocation from 'ol/Geolocation';
+import Point from 'ol/geom/Point';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { OSM, Vector as VectorSource } from 'ol/source';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
+import { fromLonLat } from 'ol/proj';
+import { LineString } from 'ol/geom';
 
-import { Icon } from "ol/style";
-import { Polygon } from "ol/geom";
+import { Icon } from 'ol/style';
+import { Polygon } from 'ol/geom';
 
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 
-import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material";
+import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material';
+import { ChatComponent } from '../chat/chat.component';
 
-const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
-const PUSHER_CLUSTER = "ap1";
+const PUSHER_API_KEY = '6f4176ccff502d8ce53b';
+const PUSHER_CLUSTER = 'ap1';
 
 declare var google: any;
-var latitude = -6.9380338;
-var longitude = 107.7558287;
-var geolocation;
-var data: any;
-var map: OlMap;
-var view: OlView;
+let latitude = -6.9380338;
+let longitude = 107.7558287;
+let geolocation;
+let data: any;
+let map: OlMap;
+let view: OlView;
 
-var lastLat = -6.9380338;
-var lastLon = 107.7558287;
+let lastLat = -6.9380338;
+let lastLon = 107.7558287;
 
-var realLat;
-var realLong;
+let realLat;
+let realLong;
 
 @Component({
-  selector: "app-map",
-  templateUrl: "./map.component.html",
-  styleUrls: ["./map.component.css"]
+  selector: 'app-map',
+  templateUrl: './map.component.html',
+  styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
   source: OlXYZ;
@@ -78,31 +79,31 @@ export class MapComponent implements OnInit {
     // this.GeoLocMap(latitude, longitude);
     this.stayUpdate();
     this.getDataNlaunch();
-    console.log("yes");
+    console.log('yes');
     // this.launchMap();
   }
 
-  // function to open Communication dialog
-  openCommDialog() {
-    const dialogRef = this.dialog.open(CommDialog);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+   // function to open CHAT dialog
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ChatComponent, {
+      height: '600px',
+      width: '800px',
     });
+
   }
 
   // function to open Report dialog
   openReportDialog() {
-    const dialogRef = this.dialog.open(ReportDialog);
+    const dialogRef = this.dialog.open(ReportDialog); // ini buat open dialog
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // }); /
   }
 
-  //Function to get data from database and launch map
+  // Function to get data from database and launch map
   getDataNlaunch() {
-    const url = "http://localhost:8000/api/tracklast";
+    const url = 'http://localhost:8000/api/tracklast';
     this.http.get(url).subscribe(res => {
       data = res;
       latitude = data.t_lat;
@@ -114,14 +115,13 @@ export class MapComponent implements OnInit {
       this.launchMap();
     });
   }
-
-  //Function to launch map
+ // Function to launch map
   launchMap() {
     this.source = new OlXYZ({
       // url: "http://tile.osm.org/{z}/{x}/{y}.png"
       // attributionsCollapsible: false,
       url:
-        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
     });
 
     this.layer = new OlTileLayer({
@@ -134,34 +134,34 @@ export class MapComponent implements OnInit {
       maxzoom: 19
     });
 
-    //Fitur untuk CC
-    var positionFeature = new Feature({
+    // Fitur untuk CC
+    const positionFeature = new Feature({
       geometry: new Point(fromLonLat([longitude, latitude]))
     });
 
     positionFeature.setStyle(
       new Style({
         image: new Icon({
-          src: "/assets/marker-asset/CC-Marker.png",
+          src: '/assets/marker-asset/CC-Marker.png',
           scale: 0.15,
           anchor: [0.5, 1],
-          anchorXUnits: "fraction",
-          anchorYUnits: "fraction"
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'fraction'
         })
       })
     );
-    //End of Fitur untuk CC
+    // End of Fitur untuk CC
 
-    //Fitur untuk Line
-    var route = new Feature();
-    var coordinates = [[longitude, latitude], [longitude, latitude]];
+    // Fitur untuk Line
+    const route = new Feature();
+    const coordinates = [[longitude, latitude], [longitude, latitude]];
     console.log(coordinates);
-    var geometry = new LineString(coordinates);
-    geometry.transform("EPSG:4326", "EPSG:3857"); //Transform to your map projection
+    const geometry = new LineString(coordinates);
+    geometry.transform('EPSG:4326', 'EPSG:3857'); // Transform to your map projection
     route.setGeometry(geometry);
-    //End of Fitur untuk Line
+    // End of Fitur untuk Line
 
-    //Source dan layer untuk line
+    // Source dan layer untuk line
     this.lineSource = new VectorSource({
       features: [route]
     });
@@ -169,17 +169,17 @@ export class MapComponent implements OnInit {
     this.lineLayer = new VectorLayer({
       source: this.lineSource
     });
-    //End of source dan layer untuk line
+    // End of source dan layer untuk line
 
-    //Source dan layer untuk Backpack
+    // Source dan layer untuk Backpack
     this.bpSource = new VectorSource({});
 
     this.bpLayer = new VectorLayer({
       source: this.bpSource
     });
-    //End of source dan layer untuk line
+    // End of source dan layer untuk line
 
-    //Source dan layer untuk CC
+    // Source dan layer untuk CC
     this.vectorSource = new VectorSource({
       features: [positionFeature]
     });
@@ -187,32 +187,32 @@ export class MapComponent implements OnInit {
     this.vectorLayer = new VectorLayer({
       source: this.vectorSource
     });
-    //End of Source dan layer untuk CC
+    // End of Source dan layer untuk CC
 
-    //Fitur untuk polygon
-    var poly = new Feature({
+    // Fitur untuk polygon
+    const poly = new Feature({
       geometry: new Polygon([
         [
-          [107.757198, -6.93987], //kanan-atas
-          [107.755198, -6.93987], //kiri-atas
-          [107.755198, -6.93787], //kiri-bawah
-          [107.757198, -6.93787], //kanan-bawah
+          [107.757198, -6.93987], // kanan-atas
+          [107.755198, -6.93987], // kiri-atas
+          [107.755198, -6.93787], // kiri-bawah
+          [107.757198, -6.93787], // kanan-bawah
         ]
       ]),
-      name: "hello",
+      name: 'hello',
       population: 200,
       rainfall: 40
     });
 
-    poly.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    poly.getGeometry().transform('EPSG:4326', 'EPSG:3857');
 
-    var poly2 = new Feature({
+    const poly2 = new Feature({
       geometry: new Polygon([
         [
-          [107.759198, -6.93987], //kanan-atas
-          [107.757198, -6.93987], //kiri-atas
-          [107.757198, -6.93787], //kiri-bawah
-          [107.759198, -6.93787], //kanan-bawah
+          [107.759198, -6.93987], // kanan-atas
+          [107.757198, -6.93987], // kiri-atas
+          [107.757198, -6.93787], // kiri-bawah
+          [107.759198, -6.93787], // kanan-bawah
         ],
       ]),
       fill: new Fill({
@@ -221,62 +221,62 @@ export class MapComponent implements OnInit {
 
     });
 
-    poly2.getGeometry().transform("EPSG:4326", "EPSG:3857");     
-    
-    var poly3 = new Feature({
+    poly2.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+
+    const poly3 = new Feature({
       geometry: new Polygon([
         [
-          [107.759198, -6.93787], //kanan-atas
-          [107.757198, -6.93787], //kiri-atas
-          [107.757198, -6.93587], //kiri-bawah
-          [107.759198, -6.93587], //kanan-bawah
+          [107.759198, -6.93787], // kanan-atas
+          [107.757198, -6.93787], // kiri-atas
+          [107.757198, -6.93587], // kiri-bawah
+          [107.759198, -6.93587], // kanan-bawah
         ]
       ])
     });
 
-    poly3.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
-    
-    var poly4 = new Feature({
+    poly3.getGeometry().transform('EPSG:4326', 'EPSG:3857');
+
+    const poly4 = new Feature({
       geometry: new Polygon([
         [
-          [107.757198, -6.93587], //kanan-atas
-          [107.755198, -6.93587], //kiri-atas
-          [107.755198, -6.93387], //kiri-bawah
-          [107.757198, -6.93387], //kanan-bawah
+          [107.757198, -6.93587], // kanan-atas
+          [107.755198, -6.93587], // kiri-atas
+          [107.755198, -6.93387], // kiri-bawah
+          [107.757198, -6.93387], // kanan-bawah
         ]
       ])
     });
 
-    poly4.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+    poly4.getGeometry().transform('EPSG:4326', 'EPSG:3857');
 
-    var poly5 = new Feature({
+    const poly5 = new Feature({
       geometry: new Polygon([
         [
-          [107.759198, -6.93587], //kanan-atas
-          [107.757198, -6.93587], //kiri-atas
-          [107.757198, -6.93387], //kiri-bawah
-          [107.759198, -6.93387], //kanan-bawah
+          [107.759198, -6.93587], // kanan-atas
+          [107.757198, -6.93587], // kiri-atas
+          [107.757198, -6.93387], // kiri-bawah
+          [107.759198, -6.93387], // kanan-bawah
         ]
       ])
     });
 
-    poly5.getGeometry().transform("EPSG:4326", "EPSG:3857"); 
+    poly5.getGeometry().transform('EPSG:4326', 'EPSG:3857');
 
-    
-    //End of Fitur untuk polygon
 
-    //Source dan layer untuk layer victim
+    // End of Fitur untuk polygon
+
+    // Source dan layer untuk layer victim
     this.victimSource = new VectorSource({
     });
 
     this.victimLayer = new VectorLayer({
       source: this.victimSource
     });
-    //End of Source dan layer untuk layer victim
+    // End of Source dan layer untuk layer victim
 
-    //Source dan layer untuk layer victim
+    // Source dan layer untuk layer victim
     this.polySource = new VectorSource({
-      features:[poly, poly2, poly3, poly4, poly5]
+      features: [poly, poly2, poly3, poly4, poly5]
     });
 
     this.polyLayer = new VectorLayer({
@@ -284,39 +284,39 @@ export class MapComponent implements OnInit {
     });
 
     this.polyLayer.setOpacity(0);
-    //End of Source dan layer untuk layer victim
+    // End of Source dan layer untuk layer victim
 
-    //Fitur untuk marker
+    // Fitur untuk marker
 
-    //Marker BP dummy
-    var bpPos = [
+    // Marker BP dummy
+    const bpPos = [
       [107.7548287, -6.9385338],
       [107.7547187, -6.9381338],
       [107.7546087, -6.9384338]
     ];
 
-    for (var i = 0; i < bpPos.length; i++) {
-      var bpMarker = new Feature({
+    for (let i = 0; i < bpPos.length; i++) {
+      const bpMarker = new Feature({
         geometry: new Point(fromLonLat([bpPos[i][0], bpPos[i][1]]))
       });
 
       bpMarker.setStyle(
         new Style({
           image: new Icon({
-            src: "/assets/marker-asset/BackPack-Marker.png",
+            src: '/assets/marker-asset/BackPack-Marker.png',
             scale: 0.15,
             anchor: [0.5, 1],
-            anchorXUnits: "fraction",
-            anchorYUnits: "fraction"
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'fraction'
           })
         })
       );
       this.vectorSource.addFeature(bpMarker);
     }
-    //End of Marker BP dummy
+    // End of Marker BP dummy
 
-    //Di kondisi nyata victim position diambil dari database
-    var victimPos = [
+    // Di kondisi nyata victim position diambil dari database
+    const victimPos = [
       [107.758198, -6.93887],
       [107.758198, -6.93687],
       [107.756198, -6.93887],
@@ -325,19 +325,19 @@ export class MapComponent implements OnInit {
       [107.758198, -6.93887]
     ];
 
-    for (var i = 0; i < victimPos.length; i++) {
-      var victimMarker = new Feature({
+    for (let i = 0; i < victimPos.length; i++) {
+      const victimMarker = new Feature({
         geometry: new Point(fromLonLat([victimPos[i][0], victimPos[i][1]]))
       });
 
       victimMarker.setStyle(
         new Style({
           image: new Icon({
-            src: "/assets/marker-asset/Victim-Marker.png",
+            src: '/assets/marker-asset/Victim-Marker.png',
             scale: 0.15,
             anchor: [0.5, 1],
-            anchorXUnits: "fraction",
-            anchorYUnits: "fraction"
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'fraction'
           })
         })
       );
@@ -345,11 +345,11 @@ export class MapComponent implements OnInit {
       this.victimSource.addFeature(victimMarker);
     }
 
-    
-    //End of Fitur untuk marker
+
+    // End of Fitur untuk marker
 
     map = new OlMap({
-      target: "map",
+      target: 'map',
       layers: [
         this.layer,
         this.victimLayer,
@@ -358,24 +358,24 @@ export class MapComponent implements OnInit {
         this.lineLayer,
         this.bpLayer
       ],
-      view: view
+      view
     });
   }
 
-  //Function to get geo Location data
+  // Function to get geo Location data
   GeoLocMap(lat, lng) {
     this.source = new OlXYZ({
       // url: "http://tile.osm.org/{z}/{x}/{y}.png"
       attributionsCollapsible: false,
       url:
-        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+        'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
     });
 
     this.layer = new OlTileLayer({
       source: this.source
     });
 
-    var view = new OlView({
+    const view = new OlView({
       center: fromLonLat([0, 0]),
       zoom: 6
     });
@@ -390,7 +390,7 @@ export class MapComponent implements OnInit {
 
     geolocation.setTracking(true);
 
-    var positionFeature = new Feature({
+    const positionFeature = new Feature({
       geometry: new Point(fromLonLat([lng, lat]))
     });
 
@@ -399,10 +399,10 @@ export class MapComponent implements OnInit {
         image: new CircleStyle({
           radius: 6,
           fill: new Fill({
-            color: "#3399CC"
+            color: '#3399CC'
           }),
           stroke: new Stroke({
-            color: "#fff",
+            color: '#fff',
             width: 2
           })
         })
@@ -413,9 +413,9 @@ export class MapComponent implements OnInit {
       features: [positionFeature]
     });
 
-    geolocation.on("change:position", function(evt) {
+    geolocation.on('change:position', function(evt) {
       console.log(geolocation.getPosition());
-      var pos = geolocation.getPosition();
+      const pos = geolocation.getPosition();
       positionFeature.setGeometry(new Point(pos));
       view.setCenter(pos);
       view.setZoom(14);
@@ -426,48 +426,48 @@ export class MapComponent implements OnInit {
     });
 
     map = new OlMap({
-      target: "map",
+      target: 'map',
       layers: [this.layer, this.vectorLayer],
-      view: view
+      view
     });
   }
 
-  //function to get data real time
+  // function to get data real time
   stayUpdate() {
-    var echo = new Echo({
-      broadcaster: "pusher",
+    const echo = new Echo({
+      broadcaster: 'pusher',
       key: PUSHER_API_KEY,
       cluster: PUSHER_CLUSTER
     });
-    echo.channel("location").listen("SendLocation", e => {
+    echo.channel('location').listen('SendLocation', e => {
       this.dataMap = e.location;
       realLat = e.location.lat;
       realLong = e.location.long;
       // console.log(realLong);
-      console.log("stay Update");
+      console.log('stay Update');
       this.updateMap(realLat, realLong);
     });
   }
 
   updateMap(lat, lon) {
-    console.log("Update Map");
+    console.log('Update Map');
 
     map.removeLayer(this.bpLayer);
     // map.removeLayer(this.lineLayer);
 
-    //Fitur untuk Backpack
-    var nextPos = new Feature({
+    // Fitur untuk Backpack
+    const nextPos = new Feature({
       geometry: new Point(fromLonLat([lon, lat]))
     });
 
     nextPos.setStyle(
       new Style({
         image: new Icon({
-          src: "/assets/marker-asset/BackPack-Marker.png",
+          src: '/assets/marker-asset/BackPack-Marker.png',
           scale: 0.15,
           anchor: [0.5, 1],
-          anchorXUnits: "fraction",
-          anchorYUnits: "fraction"
+          anchorXUnits: 'fraction',
+          anchorYUnits: 'fraction'
         })
         // image: new CircleStyle({
         //   radius: 6,
@@ -481,16 +481,16 @@ export class MapComponent implements OnInit {
         // })
       })
     );
-    //End of Fitur Backpack
+    // End of Fitur Backpack
 
-    //Fitur untuk nextLine BP
-    var nextRoute = new Feature();
-    var nextCoordinates = [[lastLon, lastLat], [lon, lat]];
+    // Fitur untuk nextLine BP
+    const nextRoute = new Feature();
+    const nextCoordinates = [[lastLon, lastLat], [lon, lat]];
     console.log(nextCoordinates);
-    var nextGeom = new LineString(nextCoordinates);
-    nextGeom.transform("EPSG:4326", "EPSG:3857"); //Transform to your map projection
+    const nextGeom = new LineString(nextCoordinates);
+    nextGeom.transform('EPSG:4326', 'EPSG:3857'); // Transform to your map projection
     nextRoute.setGeometry(nextGeom);
-    //End of Fitur untuk nextLine BP
+    // End of Fitur untuk nextLine BP
 
     this.bpSource = new VectorSource({
       features: [nextPos]
@@ -500,7 +500,7 @@ export class MapComponent implements OnInit {
       source: this.bpSource
     });
 
-    //Source dan Layer untuk line BP
+    // Source dan Layer untuk line BP
     this.lineSource = new VectorSource({
       features: [nextRoute]
     });
@@ -508,7 +508,7 @@ export class MapComponent implements OnInit {
     this.lineLayer = new VectorLayer({
       source: this.lineSource
     });
-    //End of Source dan Layer untuk line BP
+    // End of Source dan Layer untuk line BP
 
     // Jika ingin menambah fitur dari source yang sudah ada
     // this.lineLayer.getSource().addFeature(nextRoute);
@@ -522,26 +522,20 @@ export class MapComponent implements OnInit {
   showVictimdata() {
     this.vectorLayer.setOpacity(0);
     this.polyLayer.setOpacity(1);
-    console.log("show victim data");
+    console.log('show victim data');
 
-    
+
   }
 
   showAllFeature() {
     this.vectorLayer.setOpacity(1);
     this.polyLayer.setOpacity(0);
-    console.log("show All data");
+    console.log('show All data');
   }
 }
 
 @Component({
-  selector: "comm-dialog",
-  templateUrl: "comm-dialog.html"
-})
-export class CommDialog {}
-
-@Component({
-  selector: "report-dialog",
-  templateUrl: "report-dialog.html"
+  selector: 'report-dialog',
+  templateUrl: 'report-dialog.html'
 })
 export class ReportDialog {}
