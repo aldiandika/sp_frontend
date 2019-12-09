@@ -74,6 +74,12 @@ export class MapComponent implements OnInit {
   polySource: any;
   polyLayer: any;
 
+  polySource2: any;
+  polyLayer2: any;
+
+  polySource3: any;
+  polyLayer3: any;
+
   dataMap: any;
 
   marker: any;
@@ -113,6 +119,7 @@ export class MapComponent implements OnInit {
 
   //Function to get data from database and launch map
   getDataNlaunch() {
+    // const url = "http://10.10.60.93:8000/api/tracklast";
     const url = "http://localhost:8000/api/tracklast";
     this.http.get(url).subscribe(res => {
       data = res;
@@ -209,7 +216,7 @@ export class MapComponent implements OnInit {
     });
     //End of Source dan layer untuk layer victim
 
-    //Source dan layer untuk layer polygon
+    //Source dan layer untuk layer polygon korban merah
     var polyStyle = new Style({
       fill: new Fill({
         color: 'rgba(255, 0, 0, 0.3)'
@@ -230,10 +237,58 @@ export class MapComponent implements OnInit {
     });
 
     this.polyLayer.setOpacity(0);
-    //End of Source dan layer untuk layer polygon
+    //End of Source dan layer untuk layer polygon korban merah
+
+    //Source dan layer untuk layer polygon korban kuning
+    var polyStyle2 = new Style({
+      fill: new Fill({
+        color: 'rgba(240, 255, 0, 0.3)'
+      }),
+      stroke: new Stroke({
+        color: '#FF00FF',
+        width: 1
+      }),
+    });
+
+    this.polySource2 = new VectorSource({
+      // features:[poly2, poly3, poly4, poly5]
+    });
+
+    this.polyLayer2 = new VectorLayer({
+      source: this.polySource2,
+      style: polyStyle2
+    });
+
+    this.polyLayer2.setOpacity(0);
+    //End of Source dan layer untuk layer polygon korban kuning
+
+    //Source dan layer untuk layer polygon korban hijau
+    var polyStyle3 = new Style({
+      fill: new Fill({
+        color: 'rgba(77, 175, 124, 0.3)'
+      }),
+      stroke: new Stroke({
+        color: '#FF00FF',
+        width: 1
+      }),
+    });
+
+    this.polySource3 = new VectorSource({
+      // features:[poly2, poly3, poly4, poly5]
+    });
+
+    this.polyLayer3 = new VectorLayer({
+      source: this.polySource3,
+      style: polyStyle3
+    });
+
+    this.polyLayer3.setOpacity(0);
+    //End of Source dan layer untuk layer polygon korban hiau
 
 
     //Fitur untuk polygon
+
+    //Area Merah
     var poly = new Feature({
       geometry: new Polygon([
         [
@@ -244,7 +299,7 @@ export class MapComponent implements OnInit {
         ]
       ]),
     });
-    poly.setId('area1');
+    poly.setId('area merah 1');
 
     poly.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly);
@@ -259,7 +314,7 @@ export class MapComponent implements OnInit {
         ],
       ])
     });
-    poly2.setId('area2');
+    poly2.setId('area merah 2');
 
     poly2.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly2);
@@ -274,7 +329,7 @@ export class MapComponent implements OnInit {
         ]
       ])
     });
-    poly3.setId('area3');
+    poly3.setId('area merah 3');
 
     poly3.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly3);
@@ -289,11 +344,13 @@ export class MapComponent implements OnInit {
         ]
       ])
     });
-    poly4.setId('area4');
+    poly4.setId('area merah 4');
 
     poly4.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly4);
 
+
+    //Area kuning
     var poly5 = new Feature({
       geometry: new Polygon([
         [
@@ -304,10 +361,61 @@ export class MapComponent implements OnInit {
         ]
       ])
     });
-    poly5.setId('area5');
+    poly5.setId('area kuning 1');
 
     poly5.getGeometry().transform("EPSG:4326", "EPSG:3857");
-    this.polySource.addFeature(poly5);
+    this.polySource2.addFeature(poly5);
+    //END of Area kuning
+
+    //Poly hijau
+    for (var i = 0; i < 3; i++) {
+      var b1c1 = (107.755198 - (i * 0.002)).toFixed(6);
+      var b1c2 = (107.753198 - (i * 0.002)).toFixed(6);
+      var ind = i + 1;
+
+      var poly6 = new Feature({
+        geometry: new Polygon([
+          [
+            [b1c1, -6.93587],
+            [b1c2, -6.93587],
+            [b1c2, -6.93387],
+            [b1c1, -6.93387]
+          ]
+        ])
+      });
+      poly6.setId('area hijau ' + ind);
+
+      poly6.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly6);
+    }
+
+    for (var i = 0; i < 7; i++) {
+      console.log((107.759198 - (i * 0.002)).toFixed(6));
+      console.log((107.757198 - (i * 0.002)).toFixed(6));
+      console.log((107.757198 - (i * 0.002)).toFixed(6));
+      console.log((107.759198 - (i * 0.002)).toFixed(6));
+      console.log("OK");
+
+      var b2c1 = (107.759198 - (i * 0.002)).toFixed(6);
+      var b2c2 = (107.757198 - (i * 0.002)).toFixed(6);
+      var ind2 = i + 1;
+
+      var poly7 = new Feature({
+        geometry: new Polygon([
+          [
+            [b2c1, -6.93787], //kanan-atas
+            [b2c2, -6.93787], //kiri-atas
+            [b2c2, -6.93587], //kiri-bawah
+            [b2c1, -6.93587], //kanan-bawah
+          ]
+        ])
+      });
+      poly7.setId('area hijau ' + ind2);
+
+      poly7.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly7);
+    }
+
     //End of Fitur untuk polygon
 
     //Fitur untuk marker
@@ -401,6 +509,8 @@ export class MapComponent implements OnInit {
         this.victimLayer,
         this.vectorLayer,
         this.polyLayer,
+        this.polyLayer2,
+        this.polyLayer3,
         this.lineLayer,
         this.bpLayer
       ],
@@ -595,6 +705,8 @@ export class MapComponent implements OnInit {
   showVictimdata() {
     this.vectorLayer.setOpacity(0);
     this.polyLayer.setOpacity(1);
+    this.polyLayer2.setOpacity(1);
+    this.polyLayer3.setOpacity(1);
     state = 1;
     console.log("show victim data");
   }
@@ -602,6 +714,8 @@ export class MapComponent implements OnInit {
   showAllFeature() {
     this.vectorLayer.setOpacity(1);
     this.polyLayer.setOpacity(0);
+    this.polyLayer2.setOpacity(0);
+    this.polyLayer3.setOpacity(0);
     state = 0;
     console.log("show All data");
   }
