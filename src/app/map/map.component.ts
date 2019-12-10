@@ -86,8 +86,11 @@ export class MapComponent implements OnInit {
    // function to open CHAT dialog
   openDialog(): void {
     const dialogRef = this.dialog.open(ChatComponent, {
-      height: '600px',
-      width: '800px',
+      // minHeight: 'calc(100vh - 90px)',
+      // height: 'auto',
+      // width: '100%',
+      height : '600px',
+      width : '800px',
     });
 
   }
