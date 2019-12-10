@@ -44,6 +44,9 @@ var lastLon = 107.7558287;
 var realLat;
 var realLong;
 
+var nDevice: any;
+var nId: any;
+
 //State untuk menu 
 // 0 = home
 // 1 = data korban
@@ -67,6 +70,15 @@ export class MapComponent implements OnInit {
 
   bpSource: any;
   bpLayer: any;
+
+  usvSource: any;
+  usvLayer: any;
+
+  uavSource: any;
+  uavLayer: any;
+
+  bcSource: any;
+  bcLayer: any;
 
   victimSource: any;
   victimLayer: any;
@@ -195,7 +207,31 @@ export class MapComponent implements OnInit {
     this.bpLayer = new VectorLayer({
       source: this.bpSource
     });
-    //End of source dan layer untuk line
+    //End of source dan layer untuk Backpack
+
+    //Source dan layer untuk USV
+    this.usvSource = new VectorSource({});
+
+    this.usvLayer = new VectorLayer({
+      source: this.usvSource
+    });
+    //End of source dan layer untuk USV
+
+    //Source dan layer untuk UAV
+    this.uavSource = new VectorSource({});
+
+    this.uavLayer = new VectorLayer({
+      source: this.uavSource
+    });
+    //End of source dan layer untuk UAV
+
+    //Source dan layer untuk UAV
+    this.bcSource = new VectorSource({});
+
+    this.bcLayer = new VectorLayer({
+      source: this.bcSource
+    });
+    //End of source dan layer untuk UAV
 
     //Source dan layer untuk CC
     this.vectorSource = new VectorSource({
@@ -285,7 +321,6 @@ export class MapComponent implements OnInit {
     this.polyLayer3.setOpacity(0);
     //End of Source dan layer untuk layer polygon korban hiau
 
-
     //Fitur untuk polygon
 
     //Area Merah
@@ -349,7 +384,6 @@ export class MapComponent implements OnInit {
     poly4.getGeometry().transform("EPSG:4326", "EPSG:3857");
     this.polySource.addFeature(poly4);
 
-
     //Area kuning
     var poly5 = new Feature({
       geometry: new Polygon([
@@ -368,7 +402,7 @@ export class MapComponent implements OnInit {
     //END of Area kuning
 
     //Poly hijau
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 4; i++) {
       var b1c1 = (107.755198 - (i * 0.002)).toFixed(6);
       var b1c2 = (107.753198 - (i * 0.002)).toFixed(6);
       var ind = i + 1;
@@ -389,16 +423,10 @@ export class MapComponent implements OnInit {
       this.polySource3.addFeature(poly6);
     }
 
-    for (var i = 0; i < 7; i++) {
-      console.log((107.759198 - (i * 0.002)).toFixed(6));
-      console.log((107.757198 - (i * 0.002)).toFixed(6));
-      console.log((107.757198 - (i * 0.002)).toFixed(6));
-      console.log((107.759198 - (i * 0.002)).toFixed(6));
-      console.log("OK");
-
+    for (var i = 1; i < 6; i++) {
       var b2c1 = (107.759198 - (i * 0.002)).toFixed(6);
       var b2c2 = (107.757198 - (i * 0.002)).toFixed(6);
-      var ind2 = i + 1;
+      var ind2 = i + 4;
 
       var poly7 = new Feature({
         geometry: new Polygon([
@@ -416,15 +444,63 @@ export class MapComponent implements OnInit {
       this.polySource3.addFeature(poly7);
     }
 
+    for (var i = 1; i < 6; i++) {
+      var b3c1 = (107.757198 - (i * 0.002)).toFixed(6);
+      var b3c2 = (107.755198 - (i * 0.002)).toFixed(6);
+      var ind3 = i + 9;
+
+      var poly8 = new Feature({
+        geometry: new Polygon([
+          [
+            [b3c1, -6.93987], //kanan-atas
+            [b3c2, -6.93987], //kiri-atas
+            [b3c2, -6.93787], //kiri-bawah
+            [b3c1, -6.93787], //kanan-bawah
+          ]
+        ])
+      });
+      poly8.setId('area hijau ' + ind3);
+
+      poly8.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly8);
+    }
+
+    for (var i = 1; i < 6; i++) {
+      // console.log((107.757198 - (i * 0.002)).toFixed(6));
+      // console.log((107.755198 - (i * 0.002)).toFixed(6));
+      // console.log((107.755198 - (i * 0.002)).toFixed(6));
+      // console.log((107.757198 - (i * 0.002)).toFixed(6));
+      // console.log("OK");
+
+      var b4c1 = (107.757198 - (i * 0.002)).toFixed(6);
+      var b4c2 = (107.755198 - (i * 0.002)).toFixed(6);
+      var ind4 = i + 14;
+
+      var poly9 = new Feature({
+        geometry: new Polygon([
+          [
+            [b4c1, -6.94187], //kanan-atas
+            [b4c2, -6.94187], //kiri-atas
+            [b4c2, -6.93987], //kiri-bawah
+            [b4c1, -6.93987], //kanan-bawah
+          ]
+        ])
+      });
+      poly9.setId('area hijau ' + ind4);
+
+      poly9.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly9);
+    }
     //End of Fitur untuk polygon
 
     //Fitur untuk marker
 
     //Marker BP dummy
     var bpPos = [
-      [107.7578287, -6.9385338],
-      [107.7576187, -6.9381338],
-      [107.7576087, -6.9384338]
+      [107.758498, -6.93887],
+      [107.756598, -6.93587],
+      [107.7576087, -6.9384338],
+      [107.757798, -6.93697]
     ];
 
     for (var i = 0; i < bpPos.length; i++) {
@@ -506,13 +582,16 @@ export class MapComponent implements OnInit {
       target: "map",
       layers: [
         this.layer,
-        this.victimLayer,
         this.vectorLayer,
         this.polyLayer,
         this.polyLayer2,
         this.polyLayer3,
         this.lineLayer,
-        this.bpLayer
+        this.bcLayer,
+        this.uavLayer,
+        this.bpLayer,
+        this.usvLayer,
+        this.victimLayer,
       ],
       overlays: [overlay],
       view: view
@@ -522,7 +601,6 @@ export class MapComponent implements OnInit {
     map.on('singleclick', function (evt) {
       var coordinate = evt.coordinate;
       var hdms = toStringHDMS(toLonLat(coordinate));
-
 
       if (state == 1) {
         var polyFeature = map.getFeaturesAtPixel(evt.pixel);
@@ -624,29 +702,195 @@ export class MapComponent implements OnInit {
     });
     echo.channel("location").listen("SendLocation", e => {
       this.dataMap = e.location;
+      nId = e.location.deviceId;
+      nDevice = e.location.device;
       realLat = e.location.lat;
       realLong = e.location.long;
       // console.log(realLong);
+      console.log(nDevice);
       console.log("stay Update");
-      this.updateMap(realLat, realLong);
+
+      if (nDevice == "backpack") {
+        this.updateMap(realLat, realLong);
+      }
+
+      if (nDevice == "usv") {
+        this.updateMapUSV(realLat, realLong);
+      }
+
+      if (nDevice == "uav") {
+        this.updateMapUAV(realLat, realLong);
+      }
+
+      if (nDevice == "bicycle") {
+        this.updateMapBC(realLat, realLong);
+      }
+
     });
   }
 
   updateMap(lat, lon) {
-    console.log("Update Map");
+    console.log("Update BP POS");
 
-    map.removeLayer(this.bpLayer);
+    // map.removeLayer(this.bpLayer);
     // map.removeLayer(this.lineLayer);
 
     //Fitur untuk Backpack
-    var nextPos = new Feature({
+    // var nextPos = new Feature({
+    //   geometry: new Point(fromLonLat([lon, lat]))
+    // });
+
+    // nextPos.setStyle(
+    //   new Style({
+    //     image: new Icon({
+    //       src: "/assets/marker-asset/BackPack-Marker.png",
+    //       scale: 0.15,
+    //       anchor: [0.5, 1],
+    //       anchorXUnits: "fraction",
+    //       anchorYUnits: "fraction"
+    //     })
+    //     // image: new CircleStyle({
+    //     //   radius: 6,
+    //     //   fill: new Fill({
+    //     //     color: "#FF0000"
+    //     //   }),
+    //     //   stroke: new Stroke({
+    //     //     color: "#fff",
+    //     //     width: 2
+    //     //   })
+    //     // })
+    //   })
+    // );
+    //End of Fitur Backpack
+
+    //Fitur untuk nextLine BP
+    var nextRoute = new Feature();
+    var nextCoordinates = [[lastLon, lastLat], [lon, lat]];
+    console.log(nextCoordinates);
+    var nextGeom = new LineString(nextCoordinates);
+    nextGeom.transform("EPSG:4326", "EPSG:3857"); //Transform to your map projection
+    nextRoute.setGeometry(nextGeom);
+    //End of Fitur untuk nextLine BP
+
+    // this.bpSource = new VectorSource({
+    //   // features: [nextPos]
+    // });
+
+    // this.bpLayer = new VectorLayer({
+    //   source: this.bpSource
+    // });
+
+    if (nId == "1") {
+      var fet = this.bpSource.getFeatureById('bp1');
+      if (fet !== null) {
+        this.bpSource.removeFeature(fet);
+      }
+
+      var nextPos = new Feature({
+        geometry: new Point(fromLonLat([lon, lat]))
+      });
+
+      nextPos.setStyle(
+        new Style({
+          image: new Icon({
+            src: "/assets/marker-asset/BackPack-Marker.png",
+            scale: 0.15,
+            anchor: [0.5, 1],
+            anchorXUnits: "fraction",
+            anchorYUnits: "fraction"
+          })
+          // image: new CircleStyle({
+          //   radius: 6,
+          //   fill: new Fill({
+          //     color: "#FF0000"
+          //   }),
+          //   stroke: new Stroke({
+          //     color: "#fff",
+          //     width: 2
+          //   })
+          // })
+        })
+      );
+      nextPos.setId('bp1');
+      this.bpSource.addFeature(nextPos);
+
+    } else if (nId == "2") {
+      var fet2 = this.bpSource.getFeatureById('bp2');
+      if (fet2 !== null) {
+        this.bpSource.removeFeature(fet2);
+      }
+
+      var nextPosB = new Feature({
+        geometry: new Point(fromLonLat([lon, lat]))
+      });
+
+      nextPosB.setStyle(
+        new Style({
+          image: new Icon({
+            src: "/assets/marker-asset/BackPack-Marker.png",
+            scale: 0.15,
+            anchor: [0.5, 1],
+            anchorXUnits: "fraction",
+            anchorYUnits: "fraction"
+          })
+          // image: new CircleStyle({
+          //   radius: 6,
+          //   fill: new Fill({
+          //     color: "#FF0000"
+          //   }),
+          //   stroke: new Stroke({
+          //     color: "#fff",
+          //     width: 2
+          //   })
+          // })
+        })
+      );
+      nextPosB.setId('bp2');
+      this.bpSource.addFeature(nextPosB);
+    }
+
+    //Source dan Layer untuk line BP
+    this.lineSource = new VectorSource({
+      features: [nextRoute]
+    });
+
+    this.lineLayer = new VectorLayer({
+      source: this.lineSource
+    });
+    //End of Source dan Layer untuk line BP
+
+    // Jika ingin menambah fitur dari source yang sudah ada
+    // this.lineLayer.getSource().addFeature(nextRoute);
+    // map.addLayer(this.lineLayer);
+
+    // map.addLayer(this.bpLayer);
+
+    lastLat = lat;
+    lastLon = lon;
+  }
+
+  updateMapUSV(lat, lon) {
+    console.log("Update USV POS");
+
+    map.removeLayer(this.usvLayer);
+    // map.removeLayer(this.lineLayer);
+
+    this.usvSource = new VectorSource({
+      // features: [nextPos]
+    });
+
+    this.usvLayer = new VectorLayer({
+      source: this.usvSource
+    });
+
+    var nextPos2 = new Feature({
       geometry: new Point(fromLonLat([lon, lat]))
     });
 
-    nextPos.setStyle(
+    nextPos2.setStyle(
       new Style({
         image: new Icon({
-          src: "/assets/marker-asset/BackPack-Marker.png",
+          src: "/assets/marker-asset/USV-Marker.png",
           scale: 0.15,
           anchor: [0.5, 1],
           anchorXUnits: "fraction",
@@ -664,42 +908,97 @@ export class MapComponent implements OnInit {
         // })
       })
     );
-    //End of Fitur Backpack
+    this.usvSource.addFeature(nextPos2);
+    map.addLayer(this.usvLayer);
 
-    //Fitur untuk nextLine BP
-    var nextRoute = new Feature();
-    var nextCoordinates = [[lastLon, lastLat], [lon, lat]];
-    console.log(nextCoordinates);
-    var nextGeom = new LineString(nextCoordinates);
-    nextGeom.transform("EPSG:4326", "EPSG:3857"); //Transform to your map projection
-    nextRoute.setGeometry(nextGeom);
-    //End of Fitur untuk nextLine BP
+  }
 
-    this.bpSource = new VectorSource({
-      features: [nextPos]
+  updateMapUAV(lat, lon) {
+    console.log("Update UAV POS");
+
+    map.removeLayer(this.uavLayer);
+    // map.removeLayer(this.lineLayer);
+
+    this.uavSource = new VectorSource({
+      // features: [nextPos]
     });
 
-    this.bpLayer = new VectorLayer({
-      source: this.bpSource
+    this.uavLayer = new VectorLayer({
+      source: this.uavSource
     });
 
-    //Source dan Layer untuk line BP
-    this.lineSource = new VectorSource({
-      features: [nextRoute]
+    var nextPos3 = new Feature({
+      geometry: new Point(fromLonLat([lon, lat]))
     });
 
-    this.lineLayer = new VectorLayer({
-      source: this.lineSource
+    nextPos3.setStyle(
+      new Style({
+        image: new Icon({
+          src: "/assets/marker-asset/UAV-Marker.png",
+          scale: 0.15,
+          anchor: [0.5, 1],
+          anchorXUnits: "fraction",
+          anchorYUnits: "fraction"
+        })
+        // image: new CircleStyle({
+        //   radius: 6,
+        //   fill: new Fill({
+        //     color: "#FF0000"
+        //   }),
+        //   stroke: new Stroke({
+        //     color: "#fff",
+        //     width: 2
+        //   })
+        // })
+      })
+    );
+    this.uavSource.addFeature(nextPos3);
+    map.addLayer(this.uavLayer);
+
+  }
+
+  updateMapBC(lat, lon) {
+    console.log("Update BC POS");
+
+    map.removeLayer(this.bcLayer);
+    // map.removeLayer(this.lineLayer);
+
+    this.bcSource = new VectorSource({
+      // features: [nextPos]
     });
-    //End of Source dan Layer untuk line BP
 
-    // Jika ingin menambah fitur dari source yang sudah ada
-    // this.lineLayer.getSource().addFeature(nextRoute);
-    // map.addLayer(this.lineLayer);
-    map.addLayer(this.bpLayer);
+    this.bcLayer = new VectorLayer({
+      source: this.bcSource
+    });
 
-    lastLat = lat;
-    lastLon = lon;
+    var nextPos4 = new Feature({
+      geometry: new Point(fromLonLat([lon, lat]))
+    });
+
+    nextPos4.setStyle(
+      new Style({
+        image: new Icon({
+          src: "/assets/marker-asset/Bicyle-Marker.png",
+          scale: 0.15,
+          anchor: [0.5, 1],
+          anchorXUnits: "fraction",
+          anchorYUnits: "fraction"
+        })
+        // image: new CircleStyle({
+        //   radius: 6,
+        //   fill: new Fill({
+        //     color: "#FF0000"
+        //   }),
+        //   stroke: new Stroke({
+        //     color: "#fff",
+        //     width: 2
+        //   })
+        // })
+      })
+    );
+    this.bcSource.addFeature(nextPos4);
+    map.addLayer(this.bcLayer);
+
   }
 
   showVictimdata() {
