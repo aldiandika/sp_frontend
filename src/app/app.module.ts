@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MapComponent, ReportDialog } from './map/map.component';
+import { MapComponent } from './map/map.component';
 import { MapboComponent } from './mapbo/mapbo.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatCardModule, MatSliderModule, MatToolbarModule, MatButtonModule, MatGridListModule, MatNavList, MatListModule } from '@angular/material';
@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material';
 import { ChatComponent } from './chat/chat.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +24,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MapboComponent,
     DialogContentExampleDialog,
     PopKomComponent,
-    ReportDialog,
-    ChatComponent
+    ChatComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +47,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogContentExampleDialog, ChatComponent, ReportDialog]
+  entryComponents: [DialogContentExampleDialog, ChatComponent, ReportComponent]
 })
 export class AppModule {}

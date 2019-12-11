@@ -1,3 +1,4 @@
+import { ReportComponent } from './../report/report.component';
 import { Component, OnInit } from '@angular/core';
 import Echo from 'laravel-echo';
 import * as Pusher from 'pusher-js';
@@ -97,7 +98,7 @@ export class MapComponent implements OnInit {
 
   // function to open Report dialog
   openReportDialog() {
-    const dialogRef = this.dialog.open(ReportDialog); // ini buat open dialog
+    const dialogRef = this.dialog.open(ReportComponent); // ini buat open dialog
 
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log(`Dialog result: ${result}`);
@@ -536,9 +537,3 @@ export class MapComponent implements OnInit {
     console.log('show All data');
   }
 }
-
-@Component({
-  selector: 'report-dialog',
-  templateUrl: 'report-dialog.html'
-})
-export class ReportDialog {}
