@@ -465,15 +465,15 @@ export class MapComponent implements OnInit {
       this.polySource3.addFeature(poly8);
     }
 
-    for (var i = 1; i < 6; i++) {
+    for (var i = 1; i < 10; i++) {
       // console.log((107.757198 - (i * 0.002)).toFixed(6));
       // console.log((107.755198 - (i * 0.002)).toFixed(6));
       // console.log((107.755198 - (i * 0.002)).toFixed(6));
       // console.log((107.757198 - (i * 0.002)).toFixed(6));
       // console.log("OK");
 
-      var b4c1 = (107.757198 - (i * 0.002)).toFixed(6);
-      var b4c2 = (107.755198 - (i * 0.002)).toFixed(6);
+      var b4c1 = (107.767198 - (i * 0.002)).toFixed(6);
+      var b4c2 = (107.765198 - (i * 0.002)).toFixed(6);
       var ind4 = i + 14;
 
       var poly9 = new Feature({
@@ -491,6 +491,73 @@ export class MapComponent implements OnInit {
       poly9.getGeometry().transform("EPSG:4326", "EPSG:3857");
       this.polySource3.addFeature(poly9);
     }
+
+    for (var i = 1; i < 4; i++) {
+
+      var b5c1 = (107.767198 - (i * 0.002)).toFixed(6);
+      var b5c2 = (107.765198 - (i * 0.002)).toFixed(6);
+      var ind5 = i + 23;
+
+      var poly10 = new Feature({
+        geometry: new Polygon([
+          [
+            [b5c1, -6.93987], //kanan-atas
+            [b5c2, -6.93987], //kiri-atas
+            [b5c2, -6.93787], //kiri-bawah
+            [b5c1, -6.93787], //kanan-bawah
+          ]
+        ])
+      });
+      poly10.setId('area hijau ' + ind5);
+
+      poly10.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly10);
+    }
+
+    for (var i = 1; i < 4; i++) {
+
+      var b6c1 = (107.767198 - (i * 0.002)).toFixed(6);
+      var b6c2 = (107.765198 - (i * 0.002)).toFixed(6);
+      var ind6 = i + 26;
+
+      var poly11 = new Feature({
+        geometry: new Polygon([
+          [
+            [b6c1, -6.93787], //kanan-atas
+            [b6c2, -6.93787], //kiri-atas
+            [b6c2, -6.93587], //kiri-bawah
+            [b6c1, -6.93587], //kanan-bawah
+          ]
+        ])
+      });
+      poly11.setId('area hijau ' + ind6);
+
+      poly11.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly11);
+    }
+
+    for (var i = 1; i < 4; i++) {
+
+      var b7c1 = (107.767198 - (i * 0.002)).toFixed(6);
+      var b7c2 = (107.765198 - (i * 0.002)).toFixed(6);
+      var ind7 = i + 29;
+
+      var poly12 = new Feature({
+        geometry: new Polygon([
+          [
+            [b7c1, -6.93587], //kanan-atas
+            [b7c2, -6.93587], //kiri-atas
+            [b7c2, -6.93387], //kiri-bawah
+            [b7c1, -6.93387], //kanan-bawah
+          ]
+        ])
+      });
+      poly12.setId('area hijau ' + ind7);
+
+      poly12.getGeometry().transform("EPSG:4326", "EPSG:3857");
+      this.polySource3.addFeature(poly12);
+    }
+
     //End of Fitur untuk polygon
 
     //Fitur untuk marker
@@ -617,8 +684,6 @@ export class MapComponent implements OnInit {
 
         overlay.setPosition(coordinate);
       }
-
-
     });
   }
 
