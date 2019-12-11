@@ -26,6 +26,8 @@ import { HttpClient } from "@angular/common/http";
 
 import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material";
 
+import { interval } from 'rxjs';
+import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
@@ -46,6 +48,9 @@ var realLong;
 
 var nDevice: any;
 var nId: any;
+
+var polySweep: any;
+var sweepGeo: any;
 
 //State untuk menu 
 // 0 = home
@@ -92,6 +97,9 @@ export class MapComponent implements OnInit {
   polySource3: any;
   polyLayer3: any;
 
+  polySource4: any;
+  polyLayer4: any;
+
   dataMap: any;
 
   marker: any;
@@ -105,10 +113,20 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     document.getElementById('popup').style.visibility = "hidden";
     // this.GeoLocMap(latitude, longitude);
+
     this.stayUpdate();
     this.getDataNlaunch();
     console.log("yes");
+
     // this.launchMap();
+
+    // Testing
+    // this.getDataNlaunch();
+    // interval(5000).subscribe(x => {
+    //   // console.log("hello");
+    //   this.testing();
+    // });
+    //END of Testing
   }
 
   // function to open Communication dialog
@@ -131,13 +149,13 @@ export class MapComponent implements OnInit {
 
   //Function to get data from database and launch map
   getDataNlaunch() {
-    // const url = "http://10.10.60.93:8000/api/tracklast";
+    // const url = "http://192.168.1.150:8000/api/tracklast";
     const url = "http://localhost:8000/api/tracklast";
+    // const url = "http://10.10.60.106:8000/api/tracklast";
     this.http.get(url).subscribe(res => {
       data = res;
       latitude = data.t_lat;
       longitude = data.t_lon;
-
       // console.log(latitude);
       // console.log(longitude);
 
@@ -320,6 +338,28 @@ export class MapComponent implements OnInit {
 
     this.polyLayer3.setOpacity(0);
     //End of Source dan layer untuk layer polygon korban hiau
+
+    //Source dan Layer untuk layer sweeper
+    var polyStyle4 = new Style({
+      fill: new Fill({
+        color: 'rgba(195, 0, 255, 0.21)'
+      }),
+      stroke: new Stroke({
+        color: '#FF00FF',
+        width: 1
+      }),
+    });
+
+    this.polySource4 = new VectorSource({
+      // features:[poly2, poly3, poly4, poly5]
+    });
+
+    this.polyLayer4 = new VectorLayer({
+      source: this.polySource4,
+      style: polyStyle4
+    });
+
+    //END of layer sweeper
 
     //Fitur untuk polygon
 
@@ -558,6 +598,55 @@ export class MapComponent implements OnInit {
       this.polySource3.addFeature(poly12);
     }
 
+    //Sweeper
+    // for (var i = 0; i < 10; i++) {
+    //   var sb1 = (107.755198 - (i * 0.002)).toFixed(6);
+    //   var sb2 = (107.753198 - (i * 0.002)).toFixed(6);
+    //   var indS = i + 1;
+
+    //   var polySweep = new Feature({
+    //     geometry: new Polygon([
+    //       [
+    //         [sb1, -6.93587],
+    //         [sb2, -6.93587],
+    //         [sb2, -6.93387],
+    //         [sb1, -6.93387]
+    //       ]
+    //     ])
+    //   });
+    //   polySweep.setId('area Sweeping ' + indS);
+
+    //   polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    //   this.polySource4.addFeature(polySweep);
+    // }
+
+    polySweep = new Feature({
+      geometry: new Polygon([
+        [
+          [107.755198, -6.93587],
+          [107.753198, -6.93587],
+          [107.753198, -6.93387],
+          [107.755198, -6.93387]
+        ]
+      ])
+    });
+    // polySweep.setId('area Sweeping ' + indS);
+
+    // sweepGeo = new Polygon(
+    //   [
+    //     [107.755198, -6.93587],
+    //     [107.753198, -6.93587],
+    //     [107.753198, -6.93387],
+    //     [107.755198, -6.93387]
+    //   ]
+    // );
+
+    // polySweep = new Feature(sweepGeo);
+
+    polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    // this.polySource4.addFeature(polySweep);
+    //END of Sweeper
+
     //End of Fitur untuk polygon
 
     //Fitur untuk marker
@@ -653,6 +742,7 @@ export class MapComponent implements OnInit {
         this.polyLayer,
         this.polyLayer2,
         this.polyLayer3,
+        this.polyLayer4,
         this.lineLayer,
         this.bcLayer,
         this.uavLayer,
@@ -793,6 +883,45 @@ export class MapComponent implements OnInit {
 
     });
   }
+
+  //Untuk Testing
+  // testing() {
+  //   // const url = "http://192.168.1.150:8000/api/tracklast";
+  //   const url = "http://localhost:8000/api/tracklast";
+  //   this.http.get(url).subscribe(res => {
+  //     data = res;
+  //     // console.log(data);
+  //     // latitude = data.t_lat;
+  //     // longitude = data.t_lon;
+  //     // console.log(latitude);
+  //     // console.log(longitude);
+
+  //     nId = data.device_id;
+  //     nDevice = data.kategori;
+  //     realLat = data.t_lat;
+  //     realLong = data.t_lon;
+
+  //     // console.log(realLat);
+  //     console.log("stay Update");
+
+  //     if (nDevice == "backpack") {
+  //       this.updateMap(realLat, realLong);
+  //     }
+
+  //     if (nDevice == "usv") {
+  //       this.updateMapUSV(realLat, realLong);
+  //     }
+
+  //     if (nDevice == "uav") {
+  //       this.updateMapUAV(realLat, realLong);
+  //     }
+
+  //     if (nDevice == "bicycle") {
+  //       this.updateMapBC(realLat, realLong);
+  //     }
+  //   });
+  // }
+  //End of Testing
 
   updateMap(lat, lon) {
     console.log("Update BP POS");
@@ -973,6 +1102,9 @@ export class MapComponent implements OnInit {
         // })
       })
     );
+
+    var nextCoordinates = [[lon, lat]];
+    console.log(nextCoordinates);
     this.usvSource.addFeature(nextPos2);
     map.addLayer(this.usvLayer);
 
@@ -1017,6 +1149,8 @@ export class MapComponent implements OnInit {
         // })
       })
     );
+    var nextCoordinates = [[lon, lat]];
+    console.log(nextCoordinates);
     this.uavSource.addFeature(nextPos3);
     map.addLayer(this.uavLayer);
 
@@ -1061,6 +1195,8 @@ export class MapComponent implements OnInit {
         // })
       })
     );
+    var nextCoordinates = [[lon, lat]];
+    console.log(nextCoordinates);
     this.bcSource.addFeature(nextPos4);
     map.addLayer(this.bcLayer);
 
@@ -1083,6 +1219,66 @@ export class MapComponent implements OnInit {
     state = 0;
     console.log("show All data");
   }
+
+  showSweeping() {
+    var PosBp = new Feature({
+      geometry: new Point(fromLonLat([107.754998, -6.93727]))
+    });
+
+    PosBp.setStyle(
+      new Style({
+        image: new Icon({
+          src: "/assets/marker-asset/BackPack-Marker.png",
+          scale: 0.15,
+          anchor: [0.5, 1],
+          anchorXUnits: "fraction",
+          anchorYUnits: "fraction"
+        })
+        // image: new CircleStyle({
+        //   radius: 6,
+        //   fill: new Fill({
+        //     color: "#FF0000"
+        //   }),
+        //   stroke: new Stroke({
+        //     color: "#fff",
+        //     width: 2
+        //   })
+        // })
+      })
+    );
+    // PosBp.setId('bp1');
+    this.polySource4.addFeature(PosBp);
+
+    // var cPosBp = PosBp.getGeometry().transform("EPSG:3857", "EPSG:4326").getCoordinates();
+    var isInside = this.inside([107.754998, -6.93727],
+      [
+        [107.755198, -6.93587],
+        [107.753198, -6.93587],
+        [107.753198, -6.93387],
+        [107.755198, -6.93387]
+      ]
+    );
+    console.log(isInside);
+  }
+
+  inside(point, vs) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    var x = point[0], y = point[1];
+
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+      var xi = vs[i][0], yi = vs[i][1];
+      var xj = vs[j][0], yj = vs[j][1];
+
+      var intersect = ((yi > y) != (yj > y))
+        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
+  };
 }
 
 @Component({
