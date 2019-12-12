@@ -90,19 +90,20 @@ export class MapComponent implements OnInit {
       // minHeight: 'calc(100vh - 90px)',
       // height: 'auto',
       // width: '100%',
-      height : '600px',
-      width : '800px',
+      height : '100%',
+      width : '70%',
     });
 
   }
 
   // function to open Report dialog
   openReportDialog() {
-    const dialogRef = this.dialog.open(ReportComponent); // ini buat open dialog
+    const dialogRef = this.dialog.open(ReportComponent,{
+      height : '100%',
+      width : '70%',
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // }); /
+    }); // ini buat open dialog
+    
   }
 
   // Function to get data from database and launch map

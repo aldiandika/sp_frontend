@@ -1,0 +1,8 @@
+.exaContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* .exaContainer > * {
+    width: 100%;
+  } */

@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { MapboComponent } from './mapbo/mapbo.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule, MatCardModule, MatSliderModule, MatToolbarModule, MatButtonModule, MatGridListModule, MatNavList, MatListModule } from '@angular/material';
+// tslint:disable-next-line:max-line-length
+import { MatDialogModule, MatCardModule, MatSliderModule, MatToolbarModule, MatButtonModule, MatGridListModule, MatListModule, MatInputModule, MatSelectModule, MatButton } from '@angular/material';
 import { DialogContentExampleDialog } from './pop-kom/pop-kom.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PopKomComponent } from './pop-kom/pop-kom.component';
@@ -44,6 +45,9 @@ import { ReportComponent } from './report/report.component';
     FlexLayoutModule,
     MatListModule,
     MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

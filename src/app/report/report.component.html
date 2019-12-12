@@ -1,1 +1,26 @@
-<p>report works!</p>
+<div class="exaContainer">
+    <mat-form-field>
+      <input matInput placeholder="Name?">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="location?">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Select">
+          <mat-option value="option">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+    <mat-form-field class="textarea">
+      <textarea matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 placeholder="report"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button >No Thanks</button>
+    <button mat-raised-button>Ok</button>
+    <button mat-raised-button>Ok</button>
+    <button mat-raised-button>Ok</button>
+  </div>
