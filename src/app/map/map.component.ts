@@ -600,8 +600,8 @@ export class MapComponent implements OnInit {
 
     //Sweeper
     indSweep = 1;
-    for(var b=1; b<21; b++){
-      for(var k=1; k<21; k++){
+    for (var b = 1; b < 21; b++) {
+      for (var k = 1; k < 21; k++) {
         var bS1 = (-6.91787 - (b * 0.002)).toFixed(5);
         var bS2 = (-6.91587 - (b * 0.002)).toFixed(5);
         var kS1 = (107.735198 + (k * 0.002)).toFixed(6);
@@ -624,6 +624,22 @@ export class MapComponent implements OnInit {
         this.polySource4.addFeature(polySweep);
       }
     }
+
+    var tileCan = 167
+    var addition = 0;
+    for (var tb = 0; tb < 3; tb++) {
+      for (var tc = 0; tc < 8; tc++) {
+        var indDel = tc + tileCan + addition;
+        var fetS = this.polySource4.getFeatureById('as' + indDel);
+        // console.log(fetS);
+
+        if (fetS !== null) {
+          this.polySource4.removeFeature(fetS);
+        }
+      }
+      addition += 20;
+    }
+
 
     // polySweep = new Feature({
     //   geometry: new Polygon([
@@ -764,7 +780,7 @@ export class MapComponent implements OnInit {
           } catch (e) {
           }
         }
-      } else if (state == 2){
+      } else if (state == 2) {
         var polyFeature = map.getFeaturesAtPixel(evt.pixel);
         if (polyFeature !== null) {
           try {
