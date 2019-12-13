@@ -17,6 +17,8 @@ import { ChatComponent } from './chat/chat.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReportComponent } from './report/report.component';
+import { Ng2GaugeModule } from 'ng2-gauge';
+import { SensorComponent } from './sensor/sensor.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { ReportComponent } from './report/report.component';
     DialogContentExampleDialog,
     PopKomComponent,
     ChatComponent,
-    ReportComponent
+    ReportComponent,
+    SensorComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +51,10 @@ import { ReportComponent } from './report/report.component';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    Ng2GaugeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogContentExampleDialog, ChatComponent, ReportComponent]
+  entryComponents: [DialogContentExampleDialog, ChatComponent, ReportComponent, SensorComponent, ]
 })
 export class AppModule {}

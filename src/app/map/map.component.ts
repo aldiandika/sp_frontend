@@ -24,6 +24,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { MatDialog, MatDialogConfig, MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material';
 import { ChatComponent } from '../chat/chat.component';
+import { SensorComponent } from '../sensor/sensor.component';
 
 const PUSHER_API_KEY = '6f4176ccff502d8ce53b';
 const PUSHER_CLUSTER = 'ap1';
@@ -98,12 +99,17 @@ export class MapComponent implements OnInit {
 
   // function to open Report dialog
   openReportDialog() {
-    const dialogRef = this.dialog.open(ReportComponent,{
+    const dialogRef = this.dialog.open(ReportComponent, {
       height : '100%',
       width : '70%',
+    });
+  }
 
-    }); // ini buat open dialog
-    
+  openSensorDialog() {
+    const dialogRef = this.dialog.open(SensorComponent, {
+      height : '100%',
+      width : '70%',
+    });
   }
 
   // Function to get data from database and launch map
