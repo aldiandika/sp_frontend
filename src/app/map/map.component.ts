@@ -50,9 +50,9 @@ var nDevice: any;
 var nId: any;
 
 var polySweep: any;
-var sweepGeo: any;
+var indSweep: any;
 
-//State untuk menu 
+//State untuk menu
 // 0 = home
 // 1 = data korban
 // 2 = sweeper mode
@@ -150,8 +150,8 @@ export class MapComponent implements OnInit {
   //Function to get data from database and launch map
   getDataNlaunch() {
     // const url = "http://192.168.1.150:8000/api/tracklast";
-    // const url = "http://localhost:8000/api/tracklast";
-    const url = "http://10.10.40.87:8000/api/tracklast";
+    const url = "http://localhost:8000/api/tracklast";
+    // const url = "http://10.10.40.87:8000/api/tracklast";
     this.http.get(url).subscribe(res => {
       data = res;
       latitude = data.t_lat;
@@ -173,7 +173,7 @@ export class MapComponent implements OnInit {
     });
 
     this.layer = new OlTileLayer({
-      source: this.source
+      source: this.source,
     });
 
     view = new OlView({
@@ -342,11 +342,11 @@ export class MapComponent implements OnInit {
     //Source dan Layer untuk layer sweeper
     var polyStyle4 = new Style({
       fill: new Fill({
-        color: 'rgba(195, 0, 255, 0.21)'
+        color: 'rgba(255, 255, 255, 0.7)'
       }),
       stroke: new Stroke({
-        color: '#FF00FF',
-        width: 1
+        color: '#FFFFFF',
+        width: 0.1
       }),
     });
 
@@ -599,52 +599,47 @@ export class MapComponent implements OnInit {
     }
 
     //Sweeper
-    // for (var i = 0; i < 10; i++) {
-    //   var sb1 = (107.755198 - (i * 0.002)).toFixed(6);
-    //   var sb2 = (107.753198 - (i * 0.002)).toFixed(6);
-    //   var indS = i + 1;
+    indSweep = 1;
+    for(var b=1; b<21; b++){
+      for(var k=1; k<21; k++){
+        var bS1 = (-6.91787 - (b * 0.002)).toFixed(5);
+        var bS2 = (-6.91587 - (b * 0.002)).toFixed(5);
+        var kS1 = (107.735198 + (k * 0.002)).toFixed(6);
+        var kS2 = (107.733198 + (k * 0.002)).toFixed(6);
+        polySweep = new Feature({
+          geometry: new Polygon([
+            [
+              [kS1, bS1],
+              [kS2, bS1],
+              [kS2, bS2],
+              [kS1, bS2]
+            ]
+          ])
+        });
+        polySweep.setId('as' + indSweep);
+        // console.log(indSweep);
+        indSweep += 1;
 
-    //   var polySweep = new Feature({
-    //     geometry: new Polygon([
-    //       [
-    //         [sb1, -6.93587],
-    //         [sb2, -6.93587],
-    //         [sb2, -6.93387],
-    //         [sb1, -6.93387]
-    //       ]
-    //     ])
-    //   });
-    //   polySweep.setId('area Sweeping ' + indS);
+        polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
+        this.polySource4.addFeature(polySweep);
+      }
+    }
 
-    //   polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
-    //   this.polySource4.addFeature(polySweep);
-    // }
+    // polySweep = new Feature({
+    //   geometry: new Polygon([
+    //     [
+    //       [107.755198, -6.93587],
+    //       [107.753198, -6.93587],
+    //       [107.753198, -6.93387],
+    //       [107.755198, -6.93387]
+    //     ]
+    //   ])
+    // });
+    // polySweep.setId('as1');
 
-    polySweep = new Feature({
-      geometry: new Polygon([
-        [
-          [107.755198, -6.93587],
-          [107.753198, -6.93587],
-          [107.753198, -6.93387],
-          [107.755198, -6.93387]
-        ]
-      ])
-    });
-    // polySweep.setId('area Sweeping ' + indS);
+    // polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
+    // this.polySource4.addFeature(polySweep);
 
-    // sweepGeo = new Polygon(
-    //   [
-    //     [107.755198, -6.93587],
-    //     [107.753198, -6.93587],
-    //     [107.753198, -6.93387],
-    //     [107.755198, -6.93387]
-    //   ]
-    // );
-
-    // polySweep = new Feature(sweepGeo);
-
-    polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
-    this.polySource4.addFeature(polySweep);
     //END of Sweeper
 
     //End of Fitur untuk polygon
@@ -738,11 +733,11 @@ export class MapComponent implements OnInit {
       target: "map",
       layers: [
         this.layer,
-        this.vectorLayer,
         this.polyLayer,
         this.polyLayer2,
         this.polyLayer3,
         this.polyLayer4,
+        this.vectorLayer,
         this.lineLayer,
         this.bcLayer,
         this.uavLayer,
@@ -760,6 +755,16 @@ export class MapComponent implements OnInit {
       var hdms = toStringHDMS(toLonLat(coordinate));
 
       if (state == 1) {
+        var polyFeature = map.getFeaturesAtPixel(evt.pixel);
+        if (polyFeature !== null) {
+          try {
+            var fId = polyFeature[0].getId();
+            popContent.innerHTML = '<code>' + fId + '</code>';
+            overlay.setPosition(coordinate);
+          } catch (e) {
+          }
+        }
+      } else if (state == 2){
         var polyFeature = map.getFeaturesAtPixel(evt.pixel);
         if (polyFeature !== null) {
           try {
@@ -1090,16 +1095,6 @@ export class MapComponent implements OnInit {
           anchorXUnits: "fraction",
           anchorYUnits: "fraction"
         })
-        // image: new CircleStyle({
-        //   radius: 6,
-        //   fill: new Fill({
-        //     color: "#FF0000"
-        //   }),
-        //   stroke: new Stroke({
-        //     color: "#fff",
-        //     width: 2
-        //   })
-        // })
       })
     );
 
@@ -1137,16 +1132,6 @@ export class MapComponent implements OnInit {
           anchorXUnits: "fraction",
           anchorYUnits: "fraction"
         })
-        // image: new CircleStyle({
-        //   radius: 6,
-        //   fill: new Fill({
-        //     color: "#FF0000"
-        //   }),
-        //   stroke: new Stroke({
-        //     color: "#fff",
-        //     width: 2
-        //   })
-        // })
       })
     );
     var nextCoordinates = [[lon, lat]];
@@ -1183,16 +1168,6 @@ export class MapComponent implements OnInit {
           anchorXUnits: "fraction",
           anchorYUnits: "fraction"
         })
-        // image: new CircleStyle({
-        //   radius: 6,
-        //   fill: new Fill({
-        //     color: "#FF0000"
-        //   }),
-        //   stroke: new Stroke({
-        //     color: "#fff",
-        //     width: 2
-        //   })
-        // })
       })
     );
     var nextCoordinates = [[lon, lat]];
@@ -1216,11 +1191,23 @@ export class MapComponent implements OnInit {
     this.polyLayer.setOpacity(0);
     this.polyLayer2.setOpacity(0);
     this.polyLayer3.setOpacity(0);
+    // this.polyLayer4.setOpacity(0);
     state = 0;
     console.log("show All data");
+
+    // var fetS = this.polySource4.getFeatureById('as191','as192','as192');
+    // // console.log(fetS);
+    //   if (fetS !== null) {
+    //     this.polySource4.removeFeature(fetS);
+    //   }
   }
 
   showSweeping() {
+    this.polyLayer.setOpacity(0);
+    this.polyLayer2.setOpacity(0);
+    this.polyLayer3.setOpacity(0);
+    state = 2;
+
     var PosBp = new Feature({
       geometry: new Point(fromLonLat([107.754998, -6.93527]))
     });
