@@ -122,7 +122,7 @@ export class MapComponent implements OnInit {
 
     // Testing
     // this.getDataNlaunch();
-    // interval(5000).subscribe(x => {
+    // interval(1000).subscribe(x => {
     //   // console.log("hello");
     //   this.testing();
     // });
@@ -150,8 +150,8 @@ export class MapComponent implements OnInit {
   //Function to get data from database and launch map
   getDataNlaunch() {
     // const url = "http://192.168.1.150:8000/api/tracklast";
-    const url = "http://localhost:8000/api/tracklast";
-    // const url = "http://10.10.60.106:8000/api/tracklast";
+    // const url = "http://localhost:8000/api/tracklast";
+    const url = "http://10.10.40.87:8000/api/tracklast";
     this.http.get(url).subscribe(res => {
       data = res;
       latitude = data.t_lat;
@@ -644,7 +644,7 @@ export class MapComponent implements OnInit {
     // polySweep = new Feature(sweepGeo);
 
     polySweep.getGeometry().transform("EPSG:4326", "EPSG:3857");
-    // this.polySource4.addFeature(polySweep);
+    this.polySource4.addFeature(polySweep);
     //END of Sweeper
 
     //End of Fitur untuk polygon
@@ -1222,7 +1222,7 @@ export class MapComponent implements OnInit {
 
   showSweeping() {
     var PosBp = new Feature({
-      geometry: new Point(fromLonLat([107.754998, -6.93727]))
+      geometry: new Point(fromLonLat([107.754998, -6.93527]))
     });
 
     PosBp.setStyle(
@@ -1234,23 +1234,13 @@ export class MapComponent implements OnInit {
           anchorXUnits: "fraction",
           anchorYUnits: "fraction"
         })
-        // image: new CircleStyle({
-        //   radius: 6,
-        //   fill: new Fill({
-        //     color: "#FF0000"
-        //   }),
-        //   stroke: new Stroke({
-        //     color: "#fff",
-        //     width: 2
-        //   })
-        // })
       })
     );
     // PosBp.setId('bp1');
     this.polySource4.addFeature(PosBp);
 
     // var cPosBp = PosBp.getGeometry().transform("EPSG:3857", "EPSG:4326").getCoordinates();
-    var isInside = this.inside([107.754998, -6.93727],
+    var isInside = this.inside([107.754998, -6.93527],
       [
         [107.755198, -6.93587],
         [107.753198, -6.93587],
