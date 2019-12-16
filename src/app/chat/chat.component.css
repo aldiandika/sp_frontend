@@ -27,8 +27,16 @@
 
 .messageCard{
     height: 15%;
+    width: 100%;
+    float: left;
 }
 
 .messageForm{
     width: 100%;
+}
+
+.sendButton{
+    /* height: 15%;
+    width: 20%; */
+    float: right;
 }

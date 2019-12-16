@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SensorComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    
+
+  }
 
   ngOnInit() {
   }

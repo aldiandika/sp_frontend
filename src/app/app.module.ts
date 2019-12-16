@@ -19,6 +19,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReportComponent } from './report/report.component';
 import { Ng2GaugeModule } from 'ng2-gauge';
 import { SensorComponent } from './sensor/sensor.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { SensorComponent } from './sensor/sensor.component';
     MatSelectModule,
     MatButtonModule,
     Ng2GaugeModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

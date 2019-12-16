@@ -1,17 +1,37 @@
+<h2>Report</h2>
 <div class="exaContainer">
     <mat-form-field>
       <input matInput placeholder="Name?">
     </mat-form-field>
 
-    <mat-form-field>
-        <input matInput placeholder="location?">
-      </mat-form-field>
+    <mat-form-field hintLabel="lokasi latitude">
+        <input matInput placeholder="lat?">
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-select placeholder="Select">
-          <mat-option value="option">Option</mat-option>
+    <mat-form-field hintLabel="lokasi longitude">
+      <input matInput placeholder="lon?">
+    </mat-form-field>
+
+    <button mat-raised-button class="koordButton">pakai koordinat lokasi ini</button>
+
+    <!-- <mat-form-field>
+        <mat-select placeholder="jenis report">
+          <mat-option value="option">butuh pertolongan medis
+          <img with="10" height="10" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg">
+          </mat-option>
+          <mat-option value="option">tanda bahaya
+          <img with="10" height="10" src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg">
+        </mat-option>
+          <mat-option value="option">tidak ada akses jalan</mat-option>
         </mat-select>
-      </mat-form-field>
+    </mat-form-field> -->
+
+    <label id="example-radio-group-label">Pilih jenis laporan</label>
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" >
+        <mat-radio-button class="example-radio-button" value="1"> butuh pertolongan medis </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="2"> bahaya </mat-radio-button>
+        <mat-radio-button class="example-radio-button" value="3"> tidak akses jalan </mat-radio-button>
+      </mat-radio-group>
   
     <mat-form-field class="textarea">
       <textarea matInput matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=5 placeholder="report"></textarea>
@@ -19,8 +39,8 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-raised-button >No Thanks</button>
-    <button mat-raised-button>Ok</button>
-    <button mat-raised-button>Ok</button>
-    <button mat-raised-button>Ok</button>
+    <button mat-raised-button ><mat-icon>camera_alt</mat-icon><div>ambil foto</div></button>
+    <button mat-raised-button>Send</button>
+    <button mat-raised-button>Cancel</button>
+    <!-- <button mat-raised-button>Ok</button> -->
   </div>
