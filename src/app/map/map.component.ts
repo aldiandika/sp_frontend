@@ -1224,6 +1224,7 @@ export class MapComponent implements OnInit {
     this.polyLayer2.setOpacity(1);
     this.polyLayer3.setOpacity(1);
     this.polyLayer4.setOpacity(0);
+    this.uavLayer.setOpacity(0);
     state = 1;
     stateSweep = false;
     console.log("show victim data");
@@ -1235,6 +1236,7 @@ export class MapComponent implements OnInit {
     this.polyLayer2.setOpacity(0);
     this.polyLayer3.setOpacity(0);
     this.polyLayer4.setOpacity(0);
+    this.uavLayer.setOpacity(1);
     state = 0;
     stateSweep = false;
     console.log("show All data");
@@ -1245,6 +1247,7 @@ export class MapComponent implements OnInit {
     this.polyLayer2.setOpacity(0);
     this.polyLayer3.setOpacity(0);
     this.polyLayer4.setOpacity(1);
+    this.uavLayer.setOpacity(1);
     state = 2;
 
     var PosBp = new Feature({
