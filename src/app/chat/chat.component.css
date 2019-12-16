@@ -1,0 +1,42 @@
+.example-container {
+  /* position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; */
+  /*background: #eee;*/
+  height: 100%;
+  /*padding: 0px;*/
+}
+
+.sidePanel{
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+
+.mainPanel{
+    float: left;
+    width: 70%;
+    height: 100%;
+}
+
+.chatArea{
+    height: 85%;
+}
+
+.messageCard{
+    height: 15%;
+    width: 100%;
+    float: left;
+}
+
+.messageForm{
+    width: 100%;
+}
+
+.sendButton{
+    /* height: 15%;
+    width: 20%; */
+    float: right;
+}

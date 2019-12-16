@@ -1,0 +1,26 @@
+.exaContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* .exaContainer > * {
+    width: 100%;
+  } */
+
+  .example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+
+  .koordButton{
+    width: 20%;
+  }
+
+  #example-radio-group-label{
+    padding-top: 15px;
+  }

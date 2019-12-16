@@ -43,22 +43,26 @@
 <div class="float-left">
   <mat-grid-list cols="1" rows="4" rowHeight="2:1">
     <mat-grid-tile>
-      <button mat-raised-button (click)="openCommDialog()" color="accent" class="button-menu">
+      <button mat-raised-button (click)="openDialog()" color="accent" class="button-menu">
+        <mat-icon>message</mat-icon>
         PESAN
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
+        <mat-icon>report</mat-icon>
         REPORT
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
+      <button mat-raised-button (click)="openSensorDialog()" color="accent" class="button-menu">
+        <mat-icon>warning</mat-icon>
         SENSOR
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
+        <mat-icon>build</mat-icon>
         TOOLS
       </button>
     </mat-grid-tile>
