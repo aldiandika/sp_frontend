@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SensorComponent implements OnInit {
 
-  constructor() {
-    
+  max = 900;
+  sectors = [{
+  from: 600,
+  to: 800,
+  color: 'orange'
+  }, {
+  from: 800,
+  to: 900,
+  color: 'red'
+}];
+  unit = 'psi';
 
+  constructor() {
   }
 
   ngOnInit() {

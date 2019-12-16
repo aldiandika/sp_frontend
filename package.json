@@ -28,6 +28,7 @@
     "laravel-echo": "^1.6.1",
     "mapbox-gl": "^1.5.1",
     "ng2-gauge": "^1.2.0",
+    "ng2-gauge-with-color-band": "^0.1.2",
     "ol": "^6.1.1",
     "popper": "^1.0.1",
     "pusher-js": "^5.0.3",

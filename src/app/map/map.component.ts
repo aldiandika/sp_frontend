@@ -159,8 +159,9 @@ export class MapComponent implements OnInit {
 
   openSensorDialog() {
     const dialogRef = this.dialog.open(SensorComponent, {
-      height: '100%',
-      width: '70%',
+      
+      width: '60%',
+      height: '65%',
     });
   }
 
