@@ -35,6 +35,10 @@ const PUSHER_CLUSTER = "ap1";
 declare var google: any;
 var latitude = -6.9380338;
 var longitude = 107.7558287;
+
+var latitudeCC = -6.9381055;
+var longitudeCC = 107.7579487;
+
 var geolocation;
 var data: any;
 var map: OlMap;
@@ -57,6 +61,8 @@ var indSweep: any;
 // 1 = data korban
 // 2 = sweeper mode
 var state = 0;
+
+var stateSweep = false;
 
 @Component({
   selector: "app-map",
@@ -177,14 +183,14 @@ export class MapComponent implements OnInit {
     });
 
     view = new OlView({
-      center: fromLonLat([longitude, latitude]),
+      center: fromLonLat([longitudeCC, latitudeCC]),
       zoom: 17,
       maxzoom: 19
     });
 
     //Fitur untuk CC
     var positionFeature = new Feature({
-      geometry: new Point(fromLonLat([longitude, latitude]))
+      geometry: new Point(fromLonLat([longitudeCC, latitudeCC]))
     });
 
     positionFeature.setStyle(
@@ -640,7 +646,7 @@ export class MapComponent implements OnInit {
       addition += 20;
     }
 
-
+    this.polyLayer4.setOpacity(0);
     // polySweep = new Feature({
     //   geometry: new Polygon([
     //     [
@@ -1029,6 +1035,10 @@ export class MapComponent implements OnInit {
       nextPos.setId('bp1');
       this.bpSource.addFeature(nextPos);
 
+      if (stateSweep) {
+        this.letSweep(nextPosB);
+      }
+
     } else if (nId == "2") {
       var fet2 = this.bpSource.getFeatureById('bp2');
       if (fet2 !== null) {
@@ -1062,6 +1072,10 @@ export class MapComponent implements OnInit {
       );
       nextPosB.setId('bp2');
       this.bpSource.addFeature(nextPosB);
+
+      if (stateSweep) {
+        this.letSweep(nextPosB);
+      }
     }
 
     //Source dan Layer untuk line BP
@@ -1119,6 +1133,10 @@ export class MapComponent implements OnInit {
     this.usvSource.addFeature(nextPos2);
     map.addLayer(this.usvLayer);
 
+    if (stateSweep) {
+      this.letSweep(nextPos2);
+    }
+
   }
 
   updateMapUAV(lat, lon) {
@@ -1155,6 +1173,9 @@ export class MapComponent implements OnInit {
     this.uavSource.addFeature(nextPos3);
     map.addLayer(this.uavLayer);
 
+    if (stateSweep) {
+      this.letSweep(nextPos3);
+    }
   }
 
   updateMapBC(lat, lon) {
@@ -1191,6 +1212,10 @@ export class MapComponent implements OnInit {
     this.bcSource.addFeature(nextPos4);
     map.addLayer(this.bcLayer);
 
+    if (stateSweep) {
+      this.letSweep(nextPos4);
+    }
+
   }
 
   showVictimdata() {
@@ -1198,7 +1223,9 @@ export class MapComponent implements OnInit {
     this.polyLayer.setOpacity(1);
     this.polyLayer2.setOpacity(1);
     this.polyLayer3.setOpacity(1);
+    this.polyLayer4.setOpacity(0);
     state = 1;
+    stateSweep = false;
     console.log("show victim data");
   }
 
@@ -1207,25 +1234,21 @@ export class MapComponent implements OnInit {
     this.polyLayer.setOpacity(0);
     this.polyLayer2.setOpacity(0);
     this.polyLayer3.setOpacity(0);
-    // this.polyLayer4.setOpacity(0);
+    this.polyLayer4.setOpacity(0);
     state = 0;
+    stateSweep = false;
     console.log("show All data");
-
-    // var fetS = this.polySource4.getFeatureById('as191','as192','as192');
-    // // console.log(fetS);
-    //   if (fetS !== null) {
-    //     this.polySource4.removeFeature(fetS);
-    //   }
   }
 
   showSweeping() {
     this.polyLayer.setOpacity(0);
     this.polyLayer2.setOpacity(0);
     this.polyLayer3.setOpacity(0);
+    this.polyLayer4.setOpacity(1);
     state = 2;
 
     var PosBp = new Feature({
-      geometry: new Point(fromLonLat([107.754998, -6.93527]))
+      geometry: new Point(fromLonLat([107.754998, -6.93327]))
     });
 
     PosBp.setStyle(
@@ -1239,21 +1262,67 @@ export class MapComponent implements OnInit {
         })
       })
     );
-    // PosBp.setId('bp1');
-    this.polySource4.addFeature(PosBp);
+    // this.polySource4.addFeature(PosBp);
 
-    // var cPosBp = PosBp.getGeometry().transform("EPSG:3857", "EPSG:4326").getCoordinates();
-    var isInside = this.inside([107.754998, -6.93527],
-      [
-        [107.755198, -6.93587],
-        [107.753198, -6.93587],
-        [107.753198, -6.93387],
-        [107.755198, -6.93387]
-      ]
-    );
-    console.log(isInside);
+    stateSweep = true;
+
+    // var fetPol = this.polySource4.getFeatureById('as1').getGeometry().getCoordinates();
+    // console.log(fetPol);
+    // console.log(fetPol[0][1]);
+
+    // var cPosBp = PosBp.getGeometry().getCoordinates();
+    // console.log(cPosBp);
+
+    // for (var ti = 1; ti <= 400; ti++) {
+    //   var idPoly = 'as' + ti;
+
+    //   if (this.polySource4.getFeatureById(idPoly) !== null) {
+    //     var fetPol = this.polySource4.getFeatureById(idPoly).getGeometry().getCoordinates();
+    //     var cPosBp = PosBp.getGeometry().getCoordinates();
+    //     var isInside = this.inside(cPosBp,
+    //       [
+    //         fetPol[0][0],
+    //         fetPol[0][1],
+    //         fetPol[0][2],
+    //         fetPol[0][3],
+    //       ]
+    //     );
+
+    //     if (isInside) {
+    //       console.log(idPoly);
+    //     }
+    //   }
+    // }
   }
 
+  letSweep(feature) {
+    for (var ti = 1; ti <= 400; ti++) {
+      var idPoly = 'as' + ti;
+
+      if (this.polySource4.getFeatureById(idPoly) !== null) {
+        var fetPol = this.polySource4.getFeatureById(idPoly).getGeometry().getCoordinates();
+        var cPos = feature.getGeometry().getCoordinates();
+        var isInside = this.inside(cPos,
+          [
+            fetPol[0][0],
+            fetPol[0][1],
+            fetPol[0][2],
+            fetPol[0][3],
+          ]
+        );
+
+        if (isInside) {
+          console.log(idPoly);
+          var delPol = this.polySource4.getFeatureById(idPoly);
+          if (delPol !== null) {
+            this.polySource4.removeFeature(delPol);
+          }
+        }
+      }
+    }
+  }
+
+  //Fungsi untuk mengetahui adanya titik pada suatu region
   inside(point, vs) {
     // ray-casting algorithm based on
     // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
