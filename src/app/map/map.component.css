@@ -289,15 +289,24 @@ svg#clouds {
 .float-right {
   position: fixed;
   right: 0rem;
-  top: 25%;
+  top: 15%;
   width: 10rem;
   height: 5rem;
 }
 
+.float-right-hud{
+  position: fixed;
+  right: 0rem;
+  bottom: 15%;
+  width: 10rem;
+  height: 10rem;
+}
+
+
 .float-left {
   position: fixed;
   left: 0rem;
-  top: 25%;
+  top: 15%;
   width: 10rem;
   height: 5rem; 
 }

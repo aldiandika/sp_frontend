@@ -20,7 +20,7 @@
 
 <!-- Buttons sebelah kanan -->
 <div class="float-right">
-  <mat-grid-list cols="1" rows="6" rowHeight="2:1">
+  <mat-grid-list cols="1" rows="4" rowHeight="2:1">
     <mat-grid-tile>
       <button mat-raised-button color="accent" class="button-menu" (click)="showAllFeature()">
         HOME
@@ -61,18 +61,23 @@
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
-      <button mat-raised-button (click)="openReportDialog()" color="accent" class="button-menu">
+      <button mat-raised-button (click)="openCommandDialog()" color="accent" class="button-menu">
         <mat-icon>build</mat-icon>
-        TOOLS
+        COMMAND
       </button>
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button (click)="openVideoDialog()" color="accent" class="button-menu">
+          <mat-icon>videocam</mat-icon>
         VIDEO
       </button>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+<!-- 
+<div class="float-right-hud">
+  <p>hai hai</p>
+</div> -->
 
 <footer class="footer-design">
   <div style="margin: auto;">

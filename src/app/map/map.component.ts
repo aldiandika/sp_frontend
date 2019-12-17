@@ -1,3 +1,4 @@
+import { CommandComponent } from './../command/command.component';
 import { ReportComponent } from './../report/report.component';
 import { Component, OnInit } from '@angular/core';
 import Echo from 'laravel-echo';
@@ -166,6 +167,14 @@ export class MapComponent implements OnInit {
 
   openVideoDialog() {
     const dialogRef = this.dialog.open(VideoComponent, {
+      panelClass: 'myapp-no-padding-dialog'
+    });
+  }
+
+  openCommandDialog() {
+    const dialogRef = this.dialog.open(CommandComponent, {
+      height: '80%',
+      width: '70%',
       panelClass: 'myapp-no-padding-dialog'
     });
   }

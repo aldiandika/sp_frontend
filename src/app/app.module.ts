@@ -21,6 +21,7 @@ import { Ng2GaugeModule } from 'ng2-gauge';
 import { SensorComponent } from './sensor/sensor.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { VideoComponent } from './video/video.component';
+import { CommandComponent } from './command/command.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { VideoComponent } from './video/video.component';
     ChatComponent,
     ReportComponent,
     SensorComponent,
-    VideoComponent
+    VideoComponent,
+    CommandComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,6 @@ import { VideoComponent } from './video/video.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogContentExampleDialog, ChatComponent, ReportComponent, SensorComponent, VideoComponent ]
+  entryComponents: [DialogContentExampleDialog, ChatComponent, ReportComponent, SensorComponent, VideoComponent, CommandComponent ]
 })
 export class AppModule {}

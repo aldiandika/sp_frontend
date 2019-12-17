@@ -1,0 +1,15 @@
+.imgGPS{
+    object-fit: contain;
+}
+
+.leftPad25{
+    padding-left: 25px;
+    padding-top: 10px;
+    float: left;
+}
+
+.rightPad25{
+    float: right;
+    padding-top: 20px;
+    padding-right: 25px;
+}
