@@ -156,6 +156,7 @@ export class MapComponent implements OnInit {
     const dialogRef = this.dialog.open(ReportComponent, {
       height: '100%',
       width: '70%',
+      panelClass: 'myapp-no-padding-top-dialog'
     });
   }
 

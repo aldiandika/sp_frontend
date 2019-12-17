@@ -291,15 +291,16 @@ svg#clouds {
   right: 0rem;
   top: 15%;
   width: 10rem;
-  height: 5rem;
+  height: 0rem;
 }
 
 .float-right-hud{
   position: fixed;
-  right: 0rem;
+  right: 2%;
   bottom: 15%;
   width: 10rem;
   height: 10rem;
+  border: 2px solid #BFC0C0;
 }
 
 
@@ -315,8 +316,12 @@ svg#clouds {
   height: 100%;
   width: 100%;
   background: rgba(6, 6, 52, 0.571);
-  font-weight: bold;
+  /* font-weight: bold; */
   color: rgba(255, 255, 255, 1);
+}
+
+.padIconbutton{
+  padding-right: 10px;
 }
 
 .footer-design {
@@ -373,4 +378,8 @@ svg#clouds {
 }
 .ol-popup-closer:after {
   content: "✖";
+}
+
+.headerSAR{
+  background: rgba(255, 153,85 , 1);
 }

@@ -10,3 +10,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .myapp-no-padding-dialog .mat-dialog-container {
     padding: 0;
   }
+
+  .myapp-no-padding-top-dialog .mat-dialog-container {
+    padding-top: 0;
+  }
