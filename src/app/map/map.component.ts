@@ -30,6 +30,7 @@ import { ChatComponent } from '../chat/chat.component';
 import { SensorComponent } from '../sensor/sensor.component';
 import { interval } from 'rxjs';
 import { transformAll } from '@angular/compiler/src/render3/r3_ast';
+import { VideoComponent } from '../video/video.component';
 
 const PUSHER_API_KEY = "6f4176ccff502d8ce53b";
 const PUSHER_CLUSTER = "ap1";
@@ -159,9 +160,13 @@ export class MapComponent implements OnInit {
 
   openSensorDialog() {
     const dialogRef = this.dialog.open(SensorComponent, {
-      
-      width: '60%',
-      height: '65%',
+      panelClass: 'myapp-no-padding-dialog'
+    });
+  }
+
+  openVideoDialog() {
+    const dialogRef = this.dialog.open(VideoComponent, {
+      panelClass: 'myapp-no-padding-dialog'
     });
   }
 
