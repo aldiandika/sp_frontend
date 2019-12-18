@@ -1,27 +1,4 @@
-<!-- <mat-sidenav-container class="example-container">
 
-  <mat-sidenav mode="side" opened>
-    <mat-nav-list>
-      <h3 mat-subheader class="tc-white">CHANNELS (5)</h3>
-      <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="[0,1]">
-        <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon> channel-name-{{i}}</a>
-      </ng-template>
-      <mat-divider></mat-divider>
-      <h3 mat-subheader class="tc-white">DIRECT MESSAGES</h3>
-      <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="[0,1,2,3,4,5]">
-        <a mat-list-item class="tc-white"><mat-icon color="accent" matListIcon>lens</mat-icon> username{{i}}</a>
-      </ng-template>
-    </mat-nav-list>
-  </mat-sidenav>
-
-    <mat-sidenav-content>
-    <div class="chatArea">haha</div>
-    <div class="messageCard">
-      <h1>koko</h1>
-    </div>
-  </mat-sidenav-content>
-
-</mat-sidenav-container> -->
 
 <div class="example-container">
     <div class="sidePanel">
@@ -30,9 +7,9 @@
             <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="[0,1]">
               <a mat-list-item class="tc-white"><mat-icon class="tc-white" matListIcon>forum</mat-icon> channel-name-{{i}}</a>
             </ng-template>
-            <!-- <mat-divider></mat-divider> -->
+           <!-- <mat-divider></mat-divider> -->
             <h3 mat-subheader class="tc-white">DIRECT MESSAGES</h3>
-            <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="[0,1,2,3,4,5]">
+            <ng-template let-item let-i="index" let-last="last" ngFor [ngForOf]="[0,1,2]">
               <a mat-list-item class="tc-white"><mat-icon color="accent" matListIcon>lens</mat-icon> username{{i}}</a>
             </ng-template>
           </mat-nav-list>
@@ -60,6 +37,8 @@
                 <textarea flex matInput placeholder="message" class="messageForm"></textarea>
               </mat-form-field>
         </div>
-        <!-- <button mat-raised-button class="sendButton">kirim</button> -->
+       <!-- <button mat-raised-button class="sendButton">kirim</button>  -->
     </div>
 </div>
+
+<!-- <img class="imgChat" height="100%" src="assets/popMessage.png" alt="Lamp"> -->

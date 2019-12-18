@@ -145,7 +145,7 @@ export class MapComponent implements OnInit {
       // minHeight: 'calc(100vh - 90px)',
       // height: 'auto',
       // width: '100%',
-      height: '100%',
+      height: '70%',
       width: '70%',
     });
 

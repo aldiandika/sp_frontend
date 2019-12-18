@@ -2,7 +2,4 @@
     float: left;
 }
 
- /* Add this to your global stylesheet after your theme setup */
- .myapp-no-padding-dialog .mat-dialog-container {
-    padding: 15;
-  }
+ 

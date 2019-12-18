@@ -22,7 +22,7 @@
 }
 
 .chatArea{
-    height: 85%;
+    height: 80%;
 }
 
 .messageCard{
@@ -39,4 +39,8 @@
     /* height: 15%;
     width: 20%; */
     float: right;
+}
+
+.imgChat{
+    object-fit: cover;
 }

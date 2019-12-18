@@ -1,0 +1,9 @@
+
+@font-face {
+    font-family: 'Blinker-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../assets/fonts/Blinker-Regular.ttf'); /* IE9 Compat Modes */
+    src: local('Blinker-Regular'), local('Blinker-Regular'),
+         url('../assets/fonts/Blinker-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+}
