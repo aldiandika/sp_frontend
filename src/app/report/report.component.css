@@ -19,8 +19,22 @@
 
   .koordButton{
     width: 20%;
+    margin-top: 10px;
   }
 
   #example-radio-group-label{
     padding-top: 15px;
+  }
+
+  .sendButton{
+    float: right;
+  }
+
+  .sendCancel{
+    float: right;
+    margin-right: 15px;
+  }
+
+  .padright{
+    padding-right: 5px;
   }

@@ -12,7 +12,7 @@
       <input matInput placeholder="lon?">
     </mat-form-field>
 
-    <button mat-raised-button class="koordButton">this coord</button>
+    <button mat-raised-button mat-button color="primary" class="koordButton">this coord</button>
 
     <!-- <mat-form-field>
         <mat-select placeholder="jenis report">
@@ -26,7 +26,7 @@
         </mat-select>
     </mat-form-field> -->
 
-    <label id="example-radio-group-label">Pilih jenis laporan</label>
+    <label id="example-radio-group-label">-- Pilih Jenis Laporan --</label>
       <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" >
         <mat-radio-button class="example-radio-button" value="1"> butuh pertolongan medis </mat-radio-button>
         <mat-radio-button class="example-radio-button" value="2"> bahaya </mat-radio-button>
@@ -38,9 +38,9 @@
     </mat-form-field>
   </div>
 
-  <div mat-dialog-actions>
-    <button mat-raised-button ><mat-icon>camera_alt</mat-icon><div>ambil foto</div></button>
-    <button mat-raised-button>Send</button>
-    <button mat-raised-button>Cancel</button>
+  <div>
+    <button mat-raised-button mat-button color="primary"><mat-icon class="padright">camera_alt</mat-icon> foto</button>
+    <button class="sendButton" mat-button color="primary" mat-raised-button>Send</button>
+    <button class="sendCancel" mat-button color="warn" mat-raised-button>Cancel</button>
     <!-- <button mat-raised-button>Ok</button> -->
   </div>
