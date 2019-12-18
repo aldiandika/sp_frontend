@@ -302,6 +302,8 @@ svg#clouds {
   height: 13rem;
   border: 2px solid #BFC0C0;
   border-radius: 5px;
+  color: white;
+  background: rgba(6, 6, 52, 0.8);
 }
 
 
@@ -310,13 +312,13 @@ svg#clouds {
   left: 0rem;
   top: 15%;
   width: 10rem;
-  height: 5rem; 
+  height: 5rem;
 }
 
 .button-menu {
   height: 100%;
   width: 100%;
-  background: rgba(6, 6, 52, 0.571);
+  background: rgba(6, 6, 52, 0.8);
   /* font-weight: bold; */
   color: rgba(255, 255, 255, 1);
 }

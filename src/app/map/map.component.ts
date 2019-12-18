@@ -154,7 +154,6 @@ export class MapComponent implements OnInit {
   // function to open Report dialog
   openReportDialog() {
     const dialogRef = this.dialog.open(ReportComponent, {
-      // height: '100%',
       width: '70%',
       panelClass: 'myapp-no-padding-top-dialog'
     });
@@ -657,10 +656,10 @@ export class MapComponent implements OnInit {
       }
     }
 
-    var tileCan = 167
+    var tileCan = 169
     var addition = 0;
     for (var tb = 0; tb < 3; tb++) {
-      for (var tc = 0; tc < 8; tc++) {
+      for (var tc = 0; tc < 5; tc++) {
         var indDel = tc + tileCan + addition;
         var fetS = this.polySource4.getFeatureById('as' + indDel);
         // console.log(fetS);
@@ -807,7 +806,10 @@ export class MapComponent implements OnInit {
         if (polyFeature !== null) {
           try {
             var fId = polyFeature[0].getId();
-            popContent.innerHTML = '<code>' + fId + '</code>';
+            popContent.innerHTML = '<code>' + fId + '</code> <br>' +
+              '<p>Jumlah Korban di temukan : 50 Orang</p>' +
+              '<p>Korban luka ringan : 30 Orang</p>' +
+              '<p>Korban meninggal : 20 Orang</p>';
             overlay.setPosition(coordinate);
           } catch (e) {
           }
