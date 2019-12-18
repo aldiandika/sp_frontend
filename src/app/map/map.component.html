@@ -62,7 +62,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <button mat-raised-button (click)="openCommandDialog()" color="accent" class="button-menu">
-        <mat-icon class="padIconbutton" >build</mat-icon>
+        <mat-icon class="padIconbutton">build</mat-icon>
         KOMANDO
       </button>
     </mat-grid-tile>
@@ -75,18 +75,22 @@
   </mat-grid-list>
 </div>
 
-<div class="float-right-hud">
-    <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-grid-tile>1</mat-grid-tile>
-        <mat-grid-tile>2</mat-grid-tile>
-        <mat-grid-tile>3</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
-    </mat-grid-list>
-</div>
+<!-- <div class="float-right-hud">
+  <mat-grid-list cols="4" rowHeight="2:1">
+    <mat-grid-tile-header>
+      komando
+    </mat-grid-tile-header>
+    <mat-grid-tile [colspan]="3">jumlah personil</mat-grid-tile>
+    <mat-grid-tile>15</mat-grid-tile>
+    <mat-grid-tile [colspan]="3">jumlah uav</mat-grid-tile>
+    <mat-grid-tile>4</mat-grid-tile>
+    <mat-grid-tile [colspan]="3">jumlah korban</mat-grid-tile>
+    <mat-grid-tile>4</mat-grid-tile>
+    <mat-grid-tile [colspan]="3">luas area</mat-grid-tile>
+    <mat-grid-tile>4</mat-grid-tile>
+  </mat-grid-list>
+</div> -->
+
 
 <footer class="footer-design">
   <div style="margin: auto;">
