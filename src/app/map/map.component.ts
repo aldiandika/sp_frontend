@@ -183,7 +183,7 @@ export class MapComponent implements OnInit {
   getDataNlaunch() {
     // const url = "http://192.168.1.150:8000/api/tracklast";
     const url = "http://localhost:8000/api/tracklast";
-    // const url = "http://10.10.40.87:8000/api/tracklast";
+    // const url = "http://10.10.60.217:8000/api/tracklast";
     this.http.get(url).subscribe(res => {
       data = res;
       latitude = data.t_lat;

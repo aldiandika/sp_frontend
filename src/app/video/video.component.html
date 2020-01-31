@@ -1,11 +1,16 @@
-<div><img src="assets/video.png" alt="Lamp"></div>
+<!-- <div><img src="assets/video.png" alt="Lamp"></div>
 <div class="leftPad25">
+    <h1>Cek</h1>
     <mat-form-field>
-    <mat-select required placeholder="pilih source">
-        <mat-option>-- None --</mat-option>
-        <mat-option value="option">UAV A</mat-option>
-        <mat-option value="option">UAV B</mat-option>
-        <mat-option value="option">BACKPACK 1</mat-option>
-    </mat-select>
+        <mat-select required placeholder="pilih source">
+            <mat-option>-- None --</mat-option>
+            <mat-option value="option">UAV A</mat-option>
+            <mat-option value="option">UAV B</mat-option>
+            <mat-option value="option">BACKPACK 1</mat-option>
+        </mat-select>
     </mat-form-field>
-</div>
+</div> -->
+
+
+<div [id]="localCallId" class="local"></div>
+<div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>

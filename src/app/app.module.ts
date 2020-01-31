@@ -22,6 +22,8 @@ import { SensorComponent } from './sensor/sensor.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { VideoComponent } from './video/video.component';
 import { CommandComponent } from './command/command.component';
+import { environment } from 'src/environments/environment';
+import { NgxAgoraModule } from 'ngx-agora';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { CommandComponent } from './command/command.component';
     MatButtonModule,
     Ng2GaugeModule,
     MatRadioModule,
+    NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
   ],
   providers: [],
   bootstrap: [AppComponent],
